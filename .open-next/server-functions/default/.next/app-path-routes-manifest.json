@@ -3,6 +3,6 @@
   "/favicon.ico/route": "/favicon.ico",
   "/account/page": "/account",
   "/login/page": "/login",
-  "/page": "/",
-  "/register/page": "/register"
+  "/register/page": "/register",
+  "/page": "/"
 }

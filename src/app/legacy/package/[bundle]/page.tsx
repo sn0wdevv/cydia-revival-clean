@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react"
 
 export default function LegacyPackagePage({
-params,
+  params,
 }: {
-params: {
-bundle: string
-}
+  params: {
+    bundle: string
+  }
 }) {
 const [loading, setLoading] =
 useState(true)

@@ -1,0 +1,18 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+
+  "name": "cydia-revival-clean",
+
+  "main": ".open-next/worker.js",
+
+  "compatibility_date": "2025-05-01",
+
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+
+  "assets": {
+    "binding": "ASSETS",
+    "directory": ".open-next/assets"
+  }
+}

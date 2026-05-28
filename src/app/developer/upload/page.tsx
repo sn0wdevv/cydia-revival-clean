@@ -4,13 +4,16 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabase"
 
-export default function DeveloperUploadPage() {
+export default function UploadPage() {
   const router = useRouter()
 
   const [bundleId, setBundleId] = useState("")
   const [name, setName] = useState("")
   const [author, setAuthor] = useState("")
   const [description, setDescription] = useState("")
+
+  const [isPaid, setIsPaid] = useState(false)
+  const [price, setPrice] = useState("0")
 
   const [loading, setLoading] = useState(false)
 
@@ -30,11 +33,21 @@ export default function DeveloperUploadPage() {
 
   async function handlePublish() {
     if (!bundleId || !name) {
-      alert("Bundle ID and Name are required.")
+      alert("Bundle ID and Package Name are required.")
       return
     }
 
     setLoading(true)
+
+    const {
+      data: { session },
+    } = await supabase.auth.getSession()
+
+    if (!session) {
+      alert("Not logged in")
+      setLoading(false)
+      return
+    }
 
     const { error } = await supabase
       .from("packages")
@@ -43,6 +56,9 @@ export default function DeveloperUploadPage() {
         name,
         author,
         description,
+        is_paid: isPaid,
+        price: Number(price),
+        developer_id: session.user.id,
       })
 
     if (error) {
@@ -57,8 +73,12 @@ export default function DeveloperUploadPage() {
     setName("")
     setAuthor("")
     setDescription("")
+    setIsPaid(false)
+    setPrice("0")
 
     setLoading(false)
+
+    router.push("/packages")
   }
 
   return (
@@ -88,7 +108,7 @@ export default function DeveloperUploadPage() {
             textAlign: "center",
           }}
         >
-          Developer Upload
+          Publish Package
         </div>
 
         <div
@@ -136,6 +156,35 @@ export default function DeveloperUploadPage() {
             onChange={(e) => setDescription(e.target.value)}
             style={textareaStyle}
           />
+
+          <div
+            style={{
+              marginBottom: "16px",
+              color: "#000",
+              fontSize: "15px",
+            }}
+          >
+            <label>
+              <input
+                type="checkbox"
+                checked={isPaid}
+                onChange={(e) => setIsPaid(e.target.checked)}
+                style={{ marginRight: "8px" }}
+              />
+
+              Paid Package
+            </label>
+          </div>
+
+          {isPaid && (
+            <input
+              type="number"
+              placeholder="Price"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              style={inputStyle}
+            />
+          )}
 
           <button
             onClick={handlePublish}

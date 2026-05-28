@@ -10,6 +10,8 @@ interface PackageData {
   name: string
   author: string
   description: string
+  is_paid: boolean
+  price: number
 }
 
 export default function PackagePage() {
@@ -17,6 +19,7 @@ export default function PackagePage() {
   const router = useRouter()
 
   const [pkg, setPkg] = useState<PackageData | null>(null)
+
   const [loading, setLoading] = useState(true)
   const [buying, setBuying] = useState(false)
   const [purchased, setPurchased] = useState(false)
@@ -192,24 +195,29 @@ export default function PackagePage() {
             >
               Purchased
             </div>
-          ) : (
+          ) : pkg.is_paid ? (
             <button
               onClick={handleBuy}
               disabled={buying}
+              style={buttonStyle}
+            >
+              {buying
+                ? "Purchasing..."
+                : `Buy for $${pkg.price}`}
+            </button>
+          ) : (
+            <div
               style={{
-                width: "100%",
+                background: "#2f6db2",
+                color: "white",
                 padding: "14px",
                 borderRadius: "8px",
-                border: "1px solid #2f5d92",
-                background: "linear-gradient(#5b9be6,#2f6db2)",
-                color: "white",
+                textAlign: "center",
                 fontWeight: "bold",
-                fontSize: "16px",
-                cursor: "pointer",
               }}
             >
-              {buying ? "Purchasing..." : "Buy Package"}
-            </button>
+              FREE PACKAGE
+            </div>
           )}
 
           <div
@@ -226,4 +234,16 @@ export default function PackagePage() {
       </div>
     </main>
   )
+}
+
+const buttonStyle = {
+  width: "100%",
+  padding: "14px",
+  borderRadius: "8px",
+  border: "1px solid #2f5d92",
+  background: "linear-gradient(#5b9be6,#2f6db2)",
+  color: "white",
+  fontWeight: "bold",
+  fontSize: "16px",
+  cursor: "pointer",
 }

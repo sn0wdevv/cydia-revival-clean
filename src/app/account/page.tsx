@@ -21,9 +21,9 @@ export default function AccountPage() {
     } = await supabase.auth.getSession()
 
     if (!session) {
-  router.push("/login?next=/account")
-  return
-}
+      router.push("/login?next=/account")
+      return
+    }
 
     setEmail(session.user.email || "")
 
@@ -101,6 +101,13 @@ export default function AccountPage() {
             Logout
           </button>
 
+          <a
+            href="/developer"
+            style={developerButton}
+          >
+            Publish Your Own Paid Packages
+          </a>
+
           <div
             style={{
               textAlign: "center",
@@ -139,4 +146,20 @@ const logoutButton = {
   fontWeight: "bold",
   fontSize: "16px",
   cursor: "pointer",
+}
+
+const developerButton = {
+  display: "block",
+  width: "100%",
+  marginTop: "14px",
+  padding: "12px",
+  borderRadius: "6px",
+  border: "1px solid #2f5d92",
+  background: "linear-gradient(#5b9be6,#2f6db2)",
+  color: "white",
+  textDecoration: "none",
+  textAlign: "center" as const,
+  fontWeight: "bold",
+  fontSize: "15px",
+  boxSizing: "border-box" as const,
 }

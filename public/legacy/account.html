@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>My Account</title>
+</head>
+
+<body
+  style="
+    background:#c5ccd4;
+    font-family:Helvetica;
+    padding:20px;
+  "
+>
+
+<div
+  style="
+    max-width:400px;
+    margin:0 auto;
+    background:#f2f2f2;
+    border:1px solid #999;
+    border-radius:8px;
+    overflow:hidden;
+  "
+>
+
+<div
+  style="
+    background:#2d4f7c;
+    color:white;
+    padding:12px;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+  "
+>
+My Account
+</div>
+
+<div style="padding:15px;">
+
+<div
+  id="username"
+  style="
+    font-size:20px;
+    font-weight:bold;
+    margin-bottom:8px;
+    color:black;
+  "
+>
+Loading...
+</div>
+
+<div
+  id="email"
+  style="
+    color:#666;
+    margin-bottom:20px;
+  "
+>
+</div>
+
+<a
+href="/legacy/purchases.html"
+style="
+display:block;
+padding:14px;
+background:white;
+border:1px solid #ccc;
+margin-bottom:12px;
+text-decoration:none;
+color:black;
+"
+
+>
+
+Installable Purchases </a>
+
+<a
+href="/legacy/devices.html"
+style="
+display:block;
+padding:14px;
+background:white;
+border:1px solid #ccc;
+margin-bottom:12px;
+text-decoration:none;
+color:black;
+"
+
+>
+
+Linked Devices </a>
+
+<a
+href="/legacy/developer.html"
+style="
+display:block;
+padding:14px;
+background:white;
+border:1px solid #ccc;
+margin-bottom:12px;
+text-decoration:none;
+color:black;
+"
+
+>
+
+Developer Center </a>
+
+<a
+href="/legacy/upload.html"
+style="
+display:block;
+padding:14px;
+background:white;
+border:1px solid #ccc;
+margin-bottom:12px;
+text-decoration:none;
+color:black;
+"
+
+>
+
+Upload Package </a>
+
+<a
+href="/legacy/my-packages.html"
+style="
+display:block;
+padding:14px;
+background:white;
+border:1px solid #ccc;
+margin-bottom:12px;
+text-decoration:none;
+color:black;
+"
+
+>
+
+My Packages </a>
+
+<button
+onclick="logout()"
+style="
+width:100%;
+padding:10px;
+background:#aa2222;
+color:white;
+border:none;
+margin-top:8px;
+"
+
+>
+
+Logout </button>
+
+<div
+  style="
+    text-align:center;
+    margin-top:20px;
+    font-size:13px;
+    color:#666;
+  "
+>
+by sn0wcode
+</div>
+
+</div>
+</div>
+
+<script>
+
+var uid =
+  localStorage.getItem(
+    "legacy_uid"
+  )
+
+if (!uid) {
+
+  window.location =
+    "/legacy/login.html"
+
+}
+
+var xhr =
+  new XMLHttpRequest()
+
+xhr.open(
+  "POST",
+  "/api/legacy-account",
+  true
+)
+
+xhr.setRequestHeader(
+  "Content-Type",
+  "application/json"
+)
+
+xhr.onreadystatechange =
+  function () {
+
+    if (
+      xhr.readyState == 4
+    ) {
+
+      try {
+
+        var data =
+          JSON.parse(
+            xhr.responseText
+          )
+
+        if (
+          !data.success
+        ) {
+
+          window.location =
+            "/legacy/login.html"
+
+          return
+
+        }
+
+        document.getElementById(
+          "username"
+        ).innerHTML =
+          data.username
+
+        document.getElementById(
+          "email"
+        ).innerHTML =
+          data.email
+
+      } catch (e) {
+
+        alert(
+          "Account error"
+        )
+
+      }
+
+    }
+
+  }
+
+xhr.send(
+  JSON.stringify({
+    uid: uid
+  })
+)
+
+function logout() {
+
+  localStorage.removeItem(
+    "legacy_uid"
+  )
+
+  window.location =
+    "/legacy/login.html"
+
+}
+
+</script>
+
+</body>
+</html>

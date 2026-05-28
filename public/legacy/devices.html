@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Devices</title>
+</head>
+
+<body
+  style="
+    background:#c5ccd4;
+    font-family:Helvetica;
+    padding:20px;
+  "
+>
+
+<div
+  style="
+    max-width:400px;
+    margin:0 auto;
+    background:#f2f2f2;
+    border:1px solid #999;
+    border-radius:8px;
+    overflow:hidden;
+  "
+>
+
+<div
+  style="
+    background:#2d4f7c;
+    color:white;
+    padding:12px;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+  "
+>
+Linked Devices
+</div>
+
+<div
+  id="devices"
+  style="padding:0;"
+>
+
+<div
+  style="
+    padding:15px;
+  "
+>
+Loading...
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+var uid =
+  localStorage.getItem(
+    "legacy_uid"
+  )
+
+if (!uid) {
+
+  window.location =
+    "/legacy/login.html"
+
+}
+
+var xhr =
+  new XMLHttpRequest()
+
+xhr.open(
+  "POST",
+  "/api/legacy-devices",
+  true
+)
+
+xhr.setRequestHeader(
+  "Content-Type",
+  "application/json"
+)
+
+xhr.onreadystatechange =
+  function () {
+
+    if (
+      xhr.readyState == 4
+    ) {
+
+      try {
+
+        var data =
+          JSON.parse(
+            xhr.responseText
+          )
+
+        if (
+          !data.success
+        ) {
+
+          alert(
+            "Failed"
+          )
+
+          return
+        }
+
+        var html = ""
+
+        if (
+          data.devices.length == 0
+        ) {
+
+          html =
+            '<div style="padding:15px;">No linked devices.</div>'
+
+        }
+
+        for (
+          var i = 0;
+          i <
+          data.devices.length;
+          i++
+        ) {
+
+          var device =
+            data.devices[i]
+
+          html +=
+            '<div style="padding:15px;border-bottom:1px solid #ccc;background:white;">' +
+
+            '<div style="font-weight:bold;color:black;">' +
+
+            (device.device_name ||
+            "Unknown Device") +
+
+            '</div>' +
+
+            '<div style="font-size:12px;color:#666;margin-top:4px;">' +
+
+            device.device_uuid +
+
+            '</div>' +
+
+            '</div>'
+
+        }
+
+        document.getElementById(
+          "devices"
+        ).innerHTML =
+          html
+
+      } catch (e) {
+
+        alert(
+          "Error"
+        )
+
+      }
+
+    }
+
+  }
+
+xhr.send(
+  JSON.stringify({
+    uid: uid
+  })
+)
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Package</title>
+</head>
+
+<body
+  style="
+    background:#c5ccd4;
+    font-family:Helvetica;
+    padding:20px;
+  "
+>
+
+<div
+  style="
+    max-width:400px;
+    margin:0 auto;
+    background:#f2f2f2;
+    border:1px solid #999;
+    border-radius:8px;
+    overflow:hidden;
+  "
+>
+
+<div
+  id="title"
+  style="
+    background:#2d4f7c;
+    color:white;
+    padding:12px;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+  "
+>
+Loading...
+</div>
+
+<div style="padding:15px;">
+
+<div
+  style="
+    font-weight:bold;
+    margin-bottom:6px;
+  "
+>
+Bundle ID
+</div>
+
+<div
+  id="bundle"
+  style="
+    color:#666;
+    margin-bottom:16px;
+  "
+>
+</div>
+
+<div
+  style="
+    font-weight:bold;
+    margin-bottom:6px;
+  "
+>
+Price
+</div>
+
+<div
+  id="price"
+  style="
+    color:#666;
+    margin-bottom:20px;
+  "
+>
+</div>
+
+<div id="button">
+</div>
+
+<div
+  style="
+    text-align:center;
+    margin-top:20px;
+    font-size:13px;
+    color:#666;
+  "
+>
+by sn0wcode
+</div>
+
+</div>
+</div>
+
+<script>
+
+var pkg = null
+
+function getQuery(name) {
+
+  var match =
+    RegExp(
+      '[?&]' +
+      name +
+      '=([^&]*)'
+    ).exec(
+      window.location.search
+    )
+
+  return match &&
+    decodeURIComponent(
+      match[1]
+    )
+
+}
+
+var packageId =
+  getQuery("id")
+
+var uid =
+  localStorage.getItem(
+    "legacy_uid"
+  )
+
+var xhr =
+  new XMLHttpRequest()
+
+xhr.open(
+  "POST",
+  "/api/legacy-package",
+  true
+)
+
+xhr.setRequestHeader(
+  "Content-Type",
+  "application/json"
+)
+
+xhr.onreadystatechange =
+  function () {
+
+    if (
+      xhr.readyState == 4
+    ) {
+
+      try {
+
+        var data =
+          JSON.parse(
+            xhr.responseText
+          )
+
+        if (
+          !data.success
+        ) {
+
+          alert(
+            "Package not found"
+          )
+
+          return
+        }
+
+        pkg =
+          data.package
+
+        document.getElementById(
+          "title"
+        ).innerHTML =
+          pkg.name
+
+        document.getElementById(
+          "bundle"
+        ).innerHTML =
+          pkg.bundle_id
+
+        document.getElementById(
+          "price"
+        ).innerHTML =
+          "$" + pkg.price
+
+        if (
+          data.owned
+        ) {
+
+          document.getElementById(
+            "button"
+          ).innerHTML =
+
+          '<button onclick="installPackage()" style="width:100%;padding:12px;background:#2d4f7c;color:white;border:none;">Install Package</button>'
+
+        } else {
+
+          document.getElementById(
+            "button"
+          ).innerHTML =
+
+          '<button onclick="purchase()" style="width:100%;padding:12px;background:#2d7c2d;color:white;border:none;">Purchase Package</button>'
+
+        }
+
+      } catch (e) {
+
+        alert(
+          "Error"
+        )
+
+      }
+
+    }
+
+  }
+
+xhr.send(
+  JSON.stringify({
+    uid: uid,
+    bundle_id: packageId
+  })
+)
+
+function purchase() {
+
+  if (!uid) {
+
+    window.location =
+      "/legacy/login.html"
+
+    return
+
+  }
+
+  var xhr =
+    new XMLHttpRequest()
+
+  xhr.open(
+    "POST",
+    "/api/legacy-checkout",
+    true
+  )
+
+  xhr.setRequestHeader(
+    "Content-Type",
+    "application/json"
+  )
+
+  xhr.onreadystatechange =
+    function () {
+
+      if (
+        xhr.readyState == 4
+      ) {
+
+        try {
+
+          var data =
+            JSON.parse(
+              xhr.responseText
+            )
+
+          if (
+            !data.success
+          ) {
+
+            alert(
+              "Checkout failed"
+            )
+
+            return
+
+          }
+
+          window.location =
+            data.url
+
+        } catch (e) {
+
+          alert(
+            "Error"
+          )
+
+        }
+
+      }
+
+    }
+
+  xhr.send(
+    JSON.stringify({
+      uid: uid,
+      package_id:
+        pkg.id
+    })
+  )
+
+}
+
+function installPackage() {
+
+  window.location =
+
+    "/legacy/download.html?id=" +
+    pkg.id
+
+}
+
+</script>
+
+</body>
+</html>

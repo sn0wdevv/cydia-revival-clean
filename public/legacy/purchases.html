@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Purchases</title>
+</head>
+
+<body
+  style="
+    background:#c5ccd4;
+    font-family:Helvetica;
+    padding:20px;
+  "
+>
+
+<div
+  style="
+    max-width:400px;
+    margin:0 auto;
+    background:#f2f2f2;
+    border:1px solid #999;
+    border-radius:8px;
+    overflow:hidden;
+  "
+>
+
+<div
+  style="
+    background:#2d4f7c;
+    color:white;
+    padding:12px;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+  "
+>
+Installable Purchases
+</div>
+
+<div
+  id="packages"
+  style="padding:0;"
+>
+
+<div
+  style="
+    padding:15px;
+  "
+>
+Loading...
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+var uid =
+  localStorage.getItem(
+    "legacy_uid"
+  )
+
+if (!uid) {
+
+  window.location =
+    "/legacy/login.html"
+
+}
+
+var xhr =
+  new XMLHttpRequest()
+
+xhr.open(
+  "POST",
+  "/api/legacy-purchases",
+  true
+)
+
+xhr.setRequestHeader(
+  "Content-Type",
+  "application/json"
+)
+
+xhr.onreadystatechange =
+  function () {
+
+    if (
+      xhr.readyState == 4
+    ) {
+
+      try {
+
+        var data =
+          JSON.parse(
+            xhr.responseText
+          )
+
+        if (
+          !data.success
+        ) {
+
+          alert(
+            "Failed"
+          )
+
+          return
+        }
+
+        var html = ""
+
+        if (
+          data.purchases.length == 0
+        ) {
+
+          html =
+            '<div style="padding:15px;">No purchases.</div>'
+
+        }
+
+        for (
+          var i = 0;
+          i <
+          data.purchases.length;
+          i++
+        ) {
+
+          var pkg =
+            data.purchases[i]
+
+          html +=
+            '<a href="/legacy/package.html?id=' +
+            pkg.package_id +
+            '" style="display:block;padding:15px;border-bottom:1px solid #ccc;color:black;text-decoration:none;background:white;">' +
+            pkg.package_name +
+            '</a>'
+
+        }
+
+        document.getElementById(
+          "packages"
+        ).innerHTML =
+          html
+
+      } catch (e) {
+
+        alert(
+          "Error"
+        )
+
+      }
+
+    }
+
+  }
+
+xhr.send(
+  JSON.stringify({
+    uid: uid
+  })
+)
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Create Account</title>
+</head>
+
+<body
+  style="
+    background:#c5ccd4;
+    font-family:Helvetica;
+    padding:20px;
+  "
+>
+
+<div
+  style="
+    max-width:400px;
+    margin:0 auto;
+    background:#f2f2f2;
+    border:1px solid #999;
+    border-radius:8px;
+    overflow:hidden;
+  "
+>
+
+<div
+  style="
+    background:#2d4f7c;
+    color:white;
+    padding:12px;
+    text-align:center;
+    font-size:22px;
+    font-weight:bold;
+  "
+>
+Create Account
+</div>
+
+<div style="padding:15px;">
+
+<input
+id="username"
+type="text"
+placeholder="Username"
+style="
+width:100%;
+padding:10px;
+margin-bottom:12px;
+box-sizing:border-box;
+"
+
+>
+
+<input
+id="email"
+type="text"
+placeholder="Email"
+style="
+width:100%;
+padding:10px;
+margin-bottom:12px;
+box-sizing:border-box;
+"
+
+>
+
+<input
+id="password"
+type="password"
+placeholder="Password"
+style="
+width:100%;
+padding:10px;
+margin-bottom:12px;
+box-sizing:border-box;
+"
+
+>
+
+<button
+onclick="register()"
+style="
+width:100%;
+padding:10px;
+background:#2d4f7c;
+color:white;
+border:none;
+"
+
+>
+
+Register </button>
+
+<a
+href="/legacy/login.html"
+style="
+display:block;
+text-align:center;
+margin-top:16px;
+color:#2d4f7c;
+text-decoration:none;
+font-weight:bold;
+"
+
+>
+
+Already have an account? </a>
+
+<div
+  style="
+    text-align:center;
+    margin-top:20px;
+    font-size:13px;
+    color:#666;
+  "
+>
+by sn0wcode
+</div>
+
+</div>
+</div>
+
+<script>
+
+function register() {
+
+  var username =
+    document.getElementById(
+      "username"
+    ).value
+
+  var email =
+    document.getElementById(
+      "email"
+    ).value
+
+  var password =
+    document.getElementById(
+      "password"
+    ).value
+
+  var xhr =
+    new XMLHttpRequest()
+
+  xhr.open(
+    "POST",
+    "/api/legacy-register",
+    true
+  )
+
+  xhr.setRequestHeader(
+    "Content-Type",
+    "application/json"
+  )
+
+  xhr.onreadystatechange =
+    function () {
+
+      if (
+        xhr.readyState == 4
+      ) {
+
+        try {
+
+          var data =
+            JSON.parse(
+              xhr.responseText
+            )
+
+          if (
+            !data.success
+          ) {
+
+            alert(
+              "Register failed"
+            )
+
+            return
+          }
+
+          localStorage.setItem(
+            "legacy_uid",
+            data.uid
+          )
+
+          window.location =
+            "/legacy/account.html"
+
+        } catch (e) {
+
+          alert(
+            "Error"
+          )
+
+        }
+
+      }
+
+    }
+
+  xhr.send(
+    JSON.stringify({
+      username: username,
+      email: email,
+      password: password
+    })
+  )
+
+}
+
+</script>
+
+</body>
+</html>

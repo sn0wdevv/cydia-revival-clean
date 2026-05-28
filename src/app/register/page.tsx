@@ -1,75 +1,109 @@
 export default function RegisterPage() {
   return (
     <main style={{
+      background: "#dfe3e8",
       minHeight: "100vh",
-      background: "#f5f5f5",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      fontFamily: "Arial"
+      fontFamily: "Helvetica",
+      paddingTop: "80px"
     }}>
+
       <div style={{
-        background: "white",
-        padding: "40px",
-        borderRadius: "12px",
-        width: "400px",
-        boxShadow: "0 0 20px rgba(0,0,0,0.1)"
+        width: "420px",
+        margin: "0 auto",
+        background: "#f9f9f9",
+        border: "1px solid #b5b5b5",
+        borderRadius: "10px",
+        overflow: "hidden",
+        boxShadow: "0 1px 4px rgba(0,0,0,0.2)"
       }}>
-        <h1 style={{
-          marginBottom: "20px",
-          fontSize: "32px"
+
+        <div style={{
+          background: "linear-gradient(#5f95d3, #2d6fb7)",
+          color: "white",
+          padding: "14px",
+          fontSize: "24px",
+          fontWeight: "bold",
+          textAlign: "center",
+          borderBottom: "1px solid #2a5d94"
         }}>
           Create Account
-        </h1>
+        </div>
 
-        <input
-          type="text"
-          placeholder="Username"
-          style={{
+        <div style={{ padding: "20px" }}>
+
+          <input
+            type="text"
+            placeholder="Username"
+            style={{
+              width: "100%",
+              padding: "12px",
+              marginBottom: "12px",
+              borderRadius: "6px",
+              border: "1px solid #a8a8a8",
+              fontSize: "16px",
+              boxSizing: "border-box"
+            }}
+          />
+
+          <input
+            type="email"
+            placeholder="Email"
+            style={{
+              width: "100%",
+              padding: "12px",
+              marginBottom: "12px",
+              borderRadius: "6px",
+              border: "1px solid #a8a8a8",
+              fontSize: "16px",
+              boxSizing: "border-box"
+            }}
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            style={{
+              width: "100%",
+              padding: "12px",
+              marginBottom: "18px",
+              borderRadius: "6px",
+              border: "1px solid #a8a8a8",
+              fontSize: "16px",
+              boxSizing: "border-box"
+            }}
+          />
+
+          <button style={{
             width: "100%",
             padding: "12px",
-            marginBottom: "12px",
-            borderRadius: "8px",
-            border: "1px solid #ccc"
-          }}
-        />
+            borderRadius: "6px",
+            border: "1px solid #2a5d94",
+            background: "linear-gradient(#5f95d3, #2d6fb7)",
+            color: "white",
+            fontSize: "16px",
+            fontWeight: "bold",
+            cursor: "pointer"
+          }}>
+            Register
+          </button>
 
-        <input
-          type="email"
-          placeholder="Email"
-          style={{
-            width: "100%",
-            padding: "12px",
-            marginBottom: "12px",
-            borderRadius: "8px",
-            border: "1px solid #ccc"
-          }}
-        />
+          <div style={{
+            marginTop: "18px",
+            textAlign: "center",
+            fontSize: "15px"
+          }}>
+            <a
+              href="/login"
+              style={{
+                color: "#2d6fb7",
+                textDecoration: "none"
+              }}
+            >
+              Back to Login
+            </a>
+          </div>
 
-        <input
-          type="password"
-          placeholder="Password"
-          style={{
-            width: "100%",
-            padding: "12px",
-            marginBottom: "20px",
-            borderRadius: "8px",
-            border: "1px solid #ccc"
-          }}
-        />
-
-        <button style={{
-          width: "100%",
-          padding: "12px",
-          border: "none",
-          borderRadius: "8px",
-          background: "#2d89ef",
-          color: "white",
-          fontSize: "16px",
-          cursor: "pointer"
-        }}>
-          Register
-        </button>
+        </div>
       </div>
     </main>
   )

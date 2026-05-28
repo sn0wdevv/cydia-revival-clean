@@ -2,7 +2,7 @@
   "/_not-found/page": "/_not-found",
   "/favicon.ico/route": "/favicon.ico",
   "/account/page": "/account",
+  "/login/page": "/login",
   "/register/page": "/register",
-  "/page": "/",
-  "/login/page": "/login"
+  "/page": "/"
 }

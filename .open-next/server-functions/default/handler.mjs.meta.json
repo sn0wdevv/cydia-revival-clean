@@ -3247,7 +3247,7 @@
       "format": "cjs"
     },
     ".open-next/server-functions/default/node_modules/next/dist/server/load-manifest.external.js": {
-      "bytes": 45894,
+      "bytes": 46090,
       "imports": [
         {
           "path": "path",
@@ -3927,7 +3927,7 @@
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/app/register/page.js": {
-      "bytes": 19529,
+      "bytes": 225612,
       "imports": [
         {
           "path": ".open-next/server-functions/default/node_modules/next/dist/shared/lib/router/utils/app-paths.js",
@@ -3967,6 +3967,11 @@
         {
           "path": "util",
           "kind": "require-call",
+          "external": true
+        },
+        {
+          "path": "@opentelemetry/api",
+          "kind": "dynamic-import",
           "external": true
         },
         {
@@ -5813,6 +5818,11 @@
           "external": true
         },
         {
+          "path": "@opentelemetry/api",
+          "kind": "dynamic-import",
+          "external": true
+        },
+        {
           "path": "path",
           "kind": "require-call",
           "external": true
@@ -6658,7 +6668,7 @@
           "bytesInOutput": 586
         },
         ".open-next/server-functions/default/node_modules/next/dist/server/load-manifest.external.js": {
-          "bytesInOutput": 36672
+          "bytesInOutput": 36854
         },
         ".open-next/server-functions/default/node_modules/next/dist/server/app-render/action-async-storage-instance.js": {
           "bytesInOutput": 501
@@ -6742,7 +6752,7 @@
           "bytesInOutput": 16893
         },
         ".open-next/server-functions/default/.next/server/app/register/page.js": {
-          "bytesInOutput": 19768
+          "bytesInOutput": 235856
         },
         ".open-next/server-functions/default/.next/server/app/account/page.js": {
           "bytesInOutput": 19238
@@ -6913,7 +6923,7 @@
           "bytesInOutput": 58373
         }
       },
-      "bytes": 2697994
+      "bytes": 2914264
     }
   }
 }

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { supabase } from "@/lib/supabase"
 
 export default function RegisterPage() {
@@ -8,6 +8,20 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    checkSession()
+  }, [])
+
+  async function checkSession() {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession()
+
+    if (session) {
+      window.location.href = "/account"
+    }
+  }
 
   async function handleRegister() {
     if (!username || !email || !password) {
@@ -109,10 +123,7 @@ export default function RegisterPage() {
             style={inputStyle}
           />
 
-          <button
-            onClick={handleRegister}
-            style={buttonStyle}
-          >
+          <button onClick={handleRegister} style={buttonStyle}>
             {loading ? "Creating..." : "Register"}
           </button>
 

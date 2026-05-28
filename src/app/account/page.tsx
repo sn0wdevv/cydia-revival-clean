@@ -1,6 +1,51 @@
 "use client"
 
+import { useEffect, useState } from "react"
+import { supabase } from "@/lib/supabase"
+
 export default function AccountPage() {
+  const [loading, setLoading] = useState(true)
+  const [email, setEmail] = useState("")
+  const [username, setUsername] = useState("")
+
+  useEffect(() => {
+    loadAccount()
+  }, [])
+
+  async function loadAccount() {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession()
+
+    if (!session) {
+      window.location.href = "/login"
+      return
+    }
+
+    setEmail(session.user.email || "")
+
+    const { data } = await supabase
+      .from("profiles")
+      .select("username")
+      .eq("id", session.user.id)
+      .single()
+
+    if (data) {
+      setUsername(data.username)
+    }
+
+    setLoading(false)
+  }
+
+  async function handleLogout() {
+    await supabase.auth.signOut()
+    window.location.href = "/login"
+  }
+
+  if (loading) {
+    return null
+  }
+
   return (
     <main
       style={{
@@ -30,7 +75,7 @@ export default function AccountPage() {
             color: "white",
             textAlign: "center",
             padding: "16px",
-            fontSize: "clamp(20px,5vw,28px)",
+            fontSize: "24px",
             fontWeight: "bold",
           }}
         >
@@ -39,25 +84,16 @@ export default function AccountPage() {
 
         <div style={{ padding: "18px" }}>
           <div style={infoBox}>
-            Username: demo_user
+            Username: {username}
           </div>
 
           <div style={infoBox}>
-            Email: demo@example.com
+            Email: {email}
           </div>
 
           <button
-            style={{
-              width: "100%",
-              padding: "12px",
-              borderRadius: "6px",
-              border: "1px solid #8a1e1e",
-              background: "linear-gradient(#ef5a5a,#bf2020)",
-              color: "white",
-              fontWeight: "bold",
-              fontSize: "16px",
-              cursor: "pointer",
-            }}
+            onClick={handleLogout}
+            style={logoutButton}
           >
             Logout
           </button>
@@ -88,4 +124,16 @@ const infoBox = {
   color: "#333",
   fontSize: "16px",
   boxSizing: "border-box" as const,
+}
+
+const logoutButton = {
+  width: "100%",
+  padding: "12px",
+  borderRadius: "6px",
+  border: "1px solid #8a1e1e",
+  background: "linear-gradient(#ef5a5a,#bf2020)",
+  color: "white",
+  fontWeight: "bold",
+  fontSize: "16px",
+  cursor: "pointer",
 }

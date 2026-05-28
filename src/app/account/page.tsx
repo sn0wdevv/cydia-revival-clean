@@ -21,9 +21,9 @@ export default function AccountPage() {
     } = await supabase.auth.getSession()
 
     if (!session) {
-      router.push("/login")
-      return
-    }
+  router.push("/login?next=/account")
+  return
+}
 
     setEmail(session.user.email || "")
 

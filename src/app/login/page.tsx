@@ -1,11 +1,14 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { supabase } from "@/lib/supabase"
 
 export default function LoginPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+
+  const next = searchParams.get("next") || "/account"
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -21,7 +24,7 @@ export default function LoginPage() {
     } = await supabase.auth.getSession()
 
     if (session) {
-      router.push("/account")
+      router.push(next)
     }
   }
 
@@ -44,7 +47,7 @@ export default function LoginPage() {
       return
     }
 
-    router.push("/account")
+    router.push(next)
   }
 
   return (
@@ -118,7 +121,7 @@ export default function LoginPage() {
             }}
           >
             <a
-              href="/register"
+              href={`/register?next=${encodeURIComponent(next)}`}
               style={{
                 color: "#2f6db2",
                 textDecoration: "none",

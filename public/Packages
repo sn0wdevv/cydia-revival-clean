@@ -7,6 +7,6 @@ Maintainer: sn0wcode
 Author: sn0wcode
 Section: Tweaks
 Depends: mobilesubstrate
-Filename: https://cydia.sn0wcode.com/debs/com.sn0wcode.cydiapatch_0.0.1-49+debug_iphoneos-arm.deb
+Filename: https://github.com/sn0wdevv/sn0wcode-cydia-repo/releases/download/v1/com.sn0wcode.cydiapatch_0.0.1-49+debug_iphoneos-arm.deb
 Size: 5136
 Icon: https://cydia.sn0wcode.com/icon.png

@@ -72,7 +72,7 @@ export default function HomePage() {
         >
           {/* Reddit */}
           <a
-            href="https://youtube.com"
+            href="https://reddit.com/r/reloadingdata"
             target="_blank"
             rel="noopener noreferrer"
             style={{

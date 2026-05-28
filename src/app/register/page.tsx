@@ -1,9 +1,12 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabase"
 
 export default function RegisterPage() {
+  const router = useRouter()
+
   const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -19,7 +22,7 @@ export default function RegisterPage() {
     } = await supabase.auth.getSession()
 
     if (session) {
-      window.location.href = "/account"
+      router.push("/account")
     }
   }
 
@@ -47,7 +50,7 @@ export default function RegisterPage() {
         .from("profiles")
         .insert({
           id: data.user.id,
-          username: username,
+          username,
         })
 
       if (profileError) {
@@ -56,7 +59,7 @@ export default function RegisterPage() {
         return
       }
 
-      window.location.href = "/account"
+      router.push("/account")
     }
 
     setLoading(false)
@@ -104,6 +107,8 @@ export default function RegisterPage() {
             placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            autoComplete="off"
+            spellCheck={false}
             style={inputStyle}
           />
 
@@ -112,6 +117,8 @@ export default function RegisterPage() {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            autoComplete="off"
+            spellCheck={false}
             style={inputStyle}
           />
 
@@ -120,10 +127,15 @@ export default function RegisterPage() {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            autoComplete="off"
+            spellCheck={false}
             style={inputStyle}
           />
 
-          <button onClick={handleRegister} style={buttonStyle}>
+          <button
+            onClick={handleRegister}
+            style={buttonStyle}
+          >
             {loading ? "Creating..." : "Register"}
           </button>
 
@@ -169,6 +181,9 @@ const inputStyle = {
   border: "1px solid #aaa",
   fontSize: "16px",
   boxSizing: "border-box" as const,
+  background: "white",
+  color: "black",
+  outline: "none",
 }
 
 const buttonStyle = {

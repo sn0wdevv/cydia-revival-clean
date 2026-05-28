@@ -1,9 +1,12 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabase"
 
 export default function AccountPage() {
+  const router = useRouter()
+
   const [loading, setLoading] = useState(true)
   const [email, setEmail] = useState("")
   const [username, setUsername] = useState("")
@@ -18,7 +21,7 @@ export default function AccountPage() {
     } = await supabase.auth.getSession()
 
     if (!session) {
-      window.location.href = "/login"
+      router.push("/login")
       return
     }
 
@@ -39,7 +42,7 @@ export default function AccountPage() {
 
   async function handleLogout() {
     await supabase.auth.signOut()
-    window.location.href = "/login"
+    router.push("/login")
   }
 
   if (loading) {

@@ -1,9 +1,12 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabase"
 
 export default function LoginPage() {
+  const router = useRouter()
+
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
@@ -18,7 +21,7 @@ export default function LoginPage() {
     } = await supabase.auth.getSession()
 
     if (session) {
-      window.location.href = "/account"
+      router.push("/account")
     }
   }
 
@@ -41,7 +44,7 @@ export default function LoginPage() {
       return
     }
 
-    window.location.href = "/account"
+    router.push("/account")
   }
 
   return (
@@ -86,6 +89,8 @@ export default function LoginPage() {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            autoComplete="off"
+            spellCheck={false}
             style={inputStyle}
           />
 
@@ -94,10 +99,15 @@ export default function LoginPage() {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            autoComplete="off"
+            spellCheck={false}
             style={inputStyle}
           />
 
-          <button onClick={handleLogin} style={buttonStyle}>
+          <button
+            onClick={handleLogin}
+            style={buttonStyle}
+          >
             {loading ? "Loading..." : "Login"}
           </button>
 
@@ -143,6 +153,9 @@ const inputStyle = {
   border: "1px solid #aaa",
   fontSize: "16px",
   boxSizing: "border-box" as const,
+  background: "white",
+  color: "black",
+  outline: "none",
 }
 
 const buttonStyle = {

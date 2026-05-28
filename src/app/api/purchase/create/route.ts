@@ -6,18 +6,19 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 )
 
+function generateCode() {
+  return Math.random()
+    .toString(36)
+    .substring(2, 10)
+}
+
 export async function POST(req: Request) {
   try {
     const body = await req.json()
 
-    const {
-      user_id,
-      udid,
-      device_name,
-      ios_version,
-    } = body
+    const { user_id, bundle_id } = body
 
-    if (!user_id || !udid) {
+    if (!user_id || !bundle_id) {
       return NextResponse.json(
         {
           error: "Missing fields",
@@ -28,32 +29,40 @@ export async function POST(req: Request) {
       )
     }
 
-    const { data: existing } = await supabase
-      .from("devices")
+    const { data: pkg } = await supabase
+      .from("packages")
       .select("*")
-      .eq("user_id", user_id)
-      .eq("udid", udid)
-      .maybeSingle()
+      .eq("bundle_id", bundle_id)
+      .single()
 
-    if (existing) {
-      return NextResponse.json({
-        success: true,
-        already_linked: true,
-      })
+    if (!pkg) {
+      return NextResponse.json(
+        {
+          error: "Package not found",
+        },
+        {
+          status: 404,
+        }
+      )
     }
 
+    const paymentCode = generateCode()
+
     await supabase
-      .from("devices")
+      .from("purchase_sessions")
       .insert({
         user_id,
-        udid,
-        device_name,
-        ios_version,
+        package_id: pkg.id,
+        payment_code: paymentCode,
+        package_name: pkg.name,
+        price: pkg.price,
       })
 
     return NextResponse.json({
       success: true,
-      linked: true,
+
+      payment_url:
+        `https://cydia.sn0wcode.com/pay/${paymentCode}`,
     })
   } catch {
     return NextResponse.json(

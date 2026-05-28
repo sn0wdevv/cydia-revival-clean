@@ -10,14 +10,9 @@ export async function POST(req: Request) {
   try {
     const body = await req.json()
 
-    const {
-      user_id,
-      udid,
-      device_name,
-      ios_version,
-    } = body
+    const { user_id, bundle_id } = body
 
-    if (!user_id || !udid) {
+    if (!user_id || !bundle_id) {
       return NextResponse.json(
         {
           error: "Missing fields",
@@ -28,32 +23,33 @@ export async function POST(req: Request) {
       )
     }
 
-    const { data: existing } = await supabase
-      .from("devices")
-      .select("*")
-      .eq("user_id", user_id)
-      .eq("udid", udid)
-      .maybeSingle()
+    const { data: pkg } = await supabase
+      .from("packages")
+      .select("id")
+      .eq("bundle_id", bundle_id)
+      .single()
 
-    if (existing) {
-      return NextResponse.json({
-        success: true,
-        already_linked: true,
-      })
+    if (!pkg) {
+      return NextResponse.json(
+        {
+          purchased: false,
+        },
+        {
+          status: 404,
+        }
+      )
     }
 
-    await supabase
-      .from("devices")
-      .insert({
-        user_id,
-        udid,
-        device_name,
-        ios_version,
-      })
+    const { data } = await supabase
+      .from("purchase_sessions")
+      .select("*")
+      .eq("user_id", user_id)
+      .eq("package_id", pkg.id)
+      .eq("completed", true)
+      .maybeSingle()
 
     return NextResponse.json({
-      success: true,
-      linked: true,
+      purchased: !!data,
     })
   } catch {
     return NextResponse.json(

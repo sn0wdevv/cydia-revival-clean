@@ -12,6 +12,11 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
 
+  const next =
+  typeof window !== "undefined"
+    ? new URLSearchParams(window.location.search).get("next") || "/account"
+    : "/account"
+
   useEffect(() => {
     checkSession()
   }, [])
@@ -59,7 +64,7 @@ export default function RegisterPage() {
         return
       }
 
-      router.push("/account")
+      router.push(next)
     }
 
     setLoading(false)
@@ -146,7 +151,7 @@ export default function RegisterPage() {
             }}
           >
             <a
-              href="/login"
+              href={`/login?next=${encodeURIComponent(next)}`}
               style={{
                 color: "#2f6db2",
                 textDecoration: "none",

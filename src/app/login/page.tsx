@@ -1,19 +1,22 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabase"
 
 export default function LoginPage() {
   const router = useRouter()
-  const searchParams = useSearchParams()
-
-  const next = searchParams.get("next") || "/account"
+ 
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
 
+  const next =
+  typeof window !== "undefined"
+    ? new URLSearchParams(window.location.search).get("next") || "/account"
+    : "/account"
+    
   useEffect(() => {
     checkSession()
   }, [])

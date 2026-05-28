@@ -4,116 +4,81 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Developer</title>
+  <title>Upload Package</title>
 </head>
 
 <body
-  style="
-    background:#c5ccd4;
-    font-family:Helvetica;
-    padding:20px;
-  "
+style="
+background:#c5ccd4;
+font-family:Helvetica;
+padding:20px;
+"
 >
 
 <div
-  style="
-    max-width:400px;
-    margin:0 auto;
-    background:#f2f2f2;
-    border:1px solid #999;
-    border-radius:8px;
-    overflow:hidden;
-  "
->
-
-<div
-  style="
-    background:#2d4f7c;
-    color:white;
-    padding:12px;
-    text-align:center;
-    font-size:22px;
-    font-weight:bold;
-  "
->
-Developer Center
-</div>
-
-<div style="padding:15px;">
-
-<a
-href="/legacy/upload.html"
 style="
-display:block;
-padding:14px;
-background:white;
-border:1px solid #ccc;
-margin-bottom:12px;
-text-decoration:none;
-color:black;
+max-width:400px;
+margin:0 auto;
+background:#f2f2f2;
+border:1px solid #999;
+padding:20px;
 "
-
 >
 
-Upload Package </a>
+<h2>Upload Package</h2>
 
-<a
-href="/legacy/my-packages.html"
+<input
+id="name"
+placeholder="Package Name"
 style="
-display:block;
-padding:14px;
-background:white;
-border:1px solid #ccc;
-margin-bottom:12px;
-text-decoration:none;
-color:black;
+width:100%;
+padding:10px;
+margin-bottom:10px;
 "
+/>
 
->
-
-My Packages </a>
-
-<a
-href="/legacy/payouts.html"
+<input
+id="bundle"
+placeholder="Bundle ID"
 style="
-display:block;
-padding:14px;
-background:white;
-border:1px solid #ccc;
-margin-bottom:12px;
-text-decoration:none;
-color:black;
+width:100%;
+padding:10px;
+margin-bottom:10px;
 "
+/>
 
+<input
+id="price"
+placeholder="Price"
+style="
+width:100%;
+padding:10px;
+margin-bottom:10px;
+"
+/>
+
+<button
+onclick="uploadPackage()"
+style="
+width:100%;
+padding:12px;
+background:#2d7c2d;
+color:white;
+border:none;
+"
 >
+Upload Package
+</button>
 
-Revenue & Payouts </a>
-
-<div
-  style="
-    text-align:center;
-    margin-top:20px;
-    font-size:13px;
-    color:#666;
-  "
->
-by sn0wcode
-</div>
-
-</div>
 </div>
 
 <script>
 
-var uid =
-  localStorage.getItem(
-    "legacy_uid"
-  )
+function uploadPackage() {
 
-if (!uid) {
-
-  window.location =
-    "/legacy/login.html"
+alert(
+  "Upload system coming next"
+)
 
 }
 

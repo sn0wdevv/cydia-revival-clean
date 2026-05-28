@@ -70,9 +70,11 @@ export default function HomePage() {
             marginBottom: "8px",
           }}
         >
-          {/* Facebook */}
+          {/* Reddit */}
           <a
-            href="#"
+            href="https://youtube.com"
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
               display: "flex",
               alignItems: "center",
@@ -93,12 +95,13 @@ export default function HomePage() {
               }}
             >
               <img
-                src="https://cydia.saurik.com/icon/facebook.png"
-                alt="Facebook"
+                src="/reddit.png"
+                alt="Reddit"
                 style={{
                   width: "24px",
                   height: "24px",
                   marginRight: "8px",
+                  borderRadius: "6px",
                 }}
               />
 
@@ -108,7 +111,7 @@ export default function HomePage() {
                   fontWeight: "bold",
                 }}
               >
-                Cydia
+                Reddit
               </span>
             </div>
 
@@ -125,7 +128,9 @@ export default function HomePage() {
 
           {/* Twitter */}
           <a
-            href="#"
+            href="https://x.com/sn0wcodedev"
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
               display: "flex",
               alignItems: "center",
@@ -145,12 +150,13 @@ export default function HomePage() {
               }}
             >
               <img
-                src="https://cydia.saurik.com/icon/twitter.png"
+                src="/twitter.png"
                 alt="Twitter"
                 style={{
                   width: "24px",
                   height: "24px",
                   marginRight: "8px",
+                  borderRadius: "6px",
                 }}
               />
 
@@ -160,7 +166,7 @@ export default function HomePage() {
                   fontWeight: "bold",
                 }}
               >
-                sn0wcode
+                Twitter
               </span>
             </div>
 
@@ -205,6 +211,8 @@ export default function HomePage() {
             it is installed on your device
             using a "jailbreaking" tool.
           </p>
+          <p></p>
+          ===== sn0wcode =====
         </div>
       </div>
     </main>

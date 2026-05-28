@@ -1,11 +1,10 @@
 "use client"
 
-export const dynamic = "force-dynamic"
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { supabase } from "@/lib/supabase"
 
-export default function PaymentSuccessPage() {
+function PaymentContent() {
   const searchParams = useSearchParams()
 
   const code = searchParams.get("code")
@@ -90,10 +89,18 @@ export default function PaymentSuccessPage() {
               fontSize: "13px",
             }}
           >
-            cydia.sn0wcode.com
+            cydia.revivalsn0w.com
           </div>
         </div>
       </div>
     </main>
+  )
+}
+
+export default function PaymentSuccessPage() {
+  return (
+    <Suspense fallback={null}>
+      <PaymentContent />
+    </Suspense>
   )
 }

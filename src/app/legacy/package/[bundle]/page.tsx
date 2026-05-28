@@ -2,13 +2,9 @@
 
 import { useEffect, useState } from "react"
 
-export default function LegacyPackagePage({
-  params,
-}: {
-  params: {
-    bundle: string
-  }
-}) {
+export default function LegacyPackagePage(
+props: any
+) {
 const [loading, setLoading] =
 useState(true)
 
@@ -44,7 +40,7 @@ localStorage.getItem(
         body: JSON.stringify({
           uid,
           bundle_id:
-            params.bundle,
+            props.params.bundle,
         }),
       }
     )

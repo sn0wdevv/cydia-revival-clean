@@ -2,10 +2,11 @@ Package: com.sn0wcode.cydiapatch
 Name: CydiaPatch
 Version: 0.0.1
 Architecture: iphoneos-arm
-Description: Cydia patched by sn0wcode
+Description: Cydia Patcher OG Version by sn0wcode
 Maintainer: sn0wcode
 Author: sn0wcode
 Section: Tweaks
 Depends: mobilesubstrate
-Filename: ./debs/com.sn0wcode.cydiapatch_0.0.1-49+debug_iphoneos-arm.deb
+Filename: https://cydia.sn0wcode.com/debs/com.sn0wcode.cydiapatch_0.0.1-49+debug_iphoneos-arm.deb
 Size: 5136
+Icon: https://cydia.sn0wcode.com/icon.png

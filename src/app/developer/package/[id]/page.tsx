@@ -1,109 +1,88 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabase"
 
-export default function UploadPage() {
+export default function EditPackagePage() {
+  const params = useParams()
   const router = useRouter()
 
-  const [bundleId, setBundleId] = useState("")
+  const [loading, setLoading] = useState(true)
+  const [saving, setSaving] = useState(false)
+
   const [name, setName] = useState("")
   const [author, setAuthor] = useState("")
   const [description, setDescription] = useState("")
 
-  const [version, setVersion] = useState("1.0")
-  const [changelog, setChangelog] = useState("")
-
-  const [repoUrl, setRepoUrl] = useState("")
-  const [debUrl, setDebUrl] = useState("")
-  const [screenshotUrl, setScreenshotUrl] = useState("")
-
   const [isPaid, setIsPaid] = useState(false)
   const [price, setPrice] = useState("0")
 
-  const [loading, setLoading] = useState(false)
-
   useEffect(() => {
-    checkSession()
+    loadPackage()
   }, [])
 
-  async function checkSession() {
+  async function loadPackage() {
     const {
       data: { session },
     } = await supabase.auth.getSession()
 
     if (!session) {
-      router.push("/login?next=/developer/upload")
+      router.push("/login?next=/developer")
+      return
     }
+
+    const { data, error } = await supabase
+      .from("packages")
+      .select("*")
+      .eq("id", params.id)
+      .eq("developer_id", session.user.id)
+      .single()
+
+    if (error || !data) {
+      router.push("/developer")
+      return
+    }
+
+    setName(data.name || "")
+    setAuthor(data.author || "")
+    setDescription(data.description || "")
+
+    setIsPaid(data.is_paid || false)
+    setPrice(String(data.price || 0))
+
+    setLoading(false)
   }
 
-  async function handlePublish() {
-    if (!bundleId || !name) {
-      alert("Bundle ID and Package Name are required.")
-      return
-    }
-
-    setLoading(true)
-
-    const {
-      data: { session },
-    } = await supabase.auth.getSession()
-
-    if (!session) {
-      alert("Not logged in")
-      setLoading(false)
-      return
-    }
+  async function handleSave() {
+    setSaving(true)
 
     const { error } = await supabase
       .from("packages")
-      .insert({
-        bundle_id: bundleId,
-
+      .update({
         name,
         author,
         description,
-
-        version,
-        changelog,
-
-        repo_url: repoUrl,
-        deb_url: debUrl,
-        screenshot_url: screenshotUrl,
-
         is_paid: isPaid,
         price: Number(price),
-
-        developer_id: session.user.id,
       })
+      .eq("id", params.id)
 
     if (error) {
       alert(error.message)
-      setLoading(false)
+      setSaving(false)
       return
     }
 
-    alert("Package published successfully.")
+    alert("Package updated successfully.")
 
-    setBundleId("")
-    setName("")
-    setAuthor("")
-    setDescription("")
+    setSaving(false)
 
-    setVersion("1.0")
-    setChangelog("")
+    router.push("/developer")
+  }
 
-    setRepoUrl("")
-    setDebUrl("")
-    setScreenshotUrl("")
-
-    setIsPaid(false)
-    setPrice("0")
-
-    setLoading(false)
-
-    router.push("/packages")
+  if (loading) {
+    return null
   }
 
   return (
@@ -133,7 +112,7 @@ export default function UploadPage() {
             textAlign: "center",
           }}
         >
-          Publish Package
+          Edit Package
         </div>
 
         <div
@@ -147,21 +126,9 @@ export default function UploadPage() {
         >
           <input
             type="text"
-            placeholder="Bundle ID"
-            value={bundleId}
-            onChange={(e) => setBundleId(e.target.value)}
-            autoComplete="off"
-            spellCheck={false}
-            style={inputStyle}
-          />
-
-          <input
-            type="text"
             placeholder="Package Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            autoComplete="off"
-            spellCheck={false}
             style={inputStyle}
           />
 
@@ -170,8 +137,6 @@ export default function UploadPage() {
             placeholder="Author"
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
-            autoComplete="off"
-            spellCheck={false}
             style={inputStyle}
           />
 
@@ -180,51 +145,6 @@ export default function UploadPage() {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             style={textareaStyle}
-          />
-
-          <input
-            type="text"
-            placeholder="Version"
-            value={version}
-            onChange={(e) => setVersion(e.target.value)}
-            style={inputStyle}
-          />
-
-          <textarea
-            placeholder="Changelog"
-            value={changelog}
-            onChange={(e) => setChangelog(e.target.value)}
-            style={textareaStyle}
-          />
-
-          <input
-            type="text"
-            placeholder="Repository URL"
-            value={repoUrl}
-            onChange={(e) => setRepoUrl(e.target.value)}
-            autoComplete="off"
-            spellCheck={false}
-            style={inputStyle}
-          />
-
-          <input
-            type="text"
-            placeholder=".deb Download URL"
-            value={debUrl}
-            onChange={(e) => setDebUrl(e.target.value)}
-            autoComplete="off"
-            spellCheck={false}
-            style={inputStyle}
-          />
-
-          <input
-            type="text"
-            placeholder="Screenshot URL"
-            value={screenshotUrl}
-            onChange={(e) => setScreenshotUrl(e.target.value)}
-            autoComplete="off"
-            spellCheck={false}
-            style={inputStyle}
           />
 
           <div
@@ -257,11 +177,11 @@ export default function UploadPage() {
           )}
 
           <button
-            onClick={handlePublish}
-            disabled={loading}
+            onClick={handleSave}
+            disabled={saving}
             style={buttonStyle}
           >
-            {loading ? "Publishing..." : "Publish Package"}
+            {saving ? "Saving..." : "Save Changes"}
           </button>
 
           <div
@@ -290,7 +210,6 @@ const inputStyle = {
   boxSizing: "border-box" as const,
   background: "white",
   color: "black",
-  outline: "none",
 }
 
 const textareaStyle = {
@@ -305,7 +224,6 @@ const textareaStyle = {
   background: "white",
   color: "black",
   resize: "vertical" as const,
-  outline: "none",
 }
 
 const buttonStyle = {

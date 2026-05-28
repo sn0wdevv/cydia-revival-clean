@@ -10,6 +10,11 @@ interface PackageData {
   name: string
   author: string
   description: string
+
+  repo_url: string
+  deb_url: string
+  screenshot_url: string
+
   is_paid: boolean
   price: number
 }
@@ -154,6 +159,19 @@ export default function PackagePage() {
             padding: "20px",
           }}
         >
+          {pkg.screenshot_url && (
+            <img
+              src={pkg.screenshot_url}
+              alt={pkg.name}
+              style={{
+                width: "100%",
+                borderRadius: "10px",
+                marginBottom: "20px",
+                border: "1px solid #bbb",
+              }}
+            />
+          )}
+
           <div
             style={{
               marginBottom: "10px",
@@ -182,6 +200,26 @@ export default function PackagePage() {
             {pkg.description}
           </div>
 
+          {pkg.repo_url && (
+            <a
+              href={pkg.repo_url}
+              target="_blank"
+              style={linkButton}
+            >
+              Open Repository
+            </a>
+          )}
+
+          {pkg.deb_url && (
+            <a
+              href={pkg.deb_url}
+              target="_blank"
+              style={linkButton}
+            >
+              Download .deb
+            </a>
+          )}
+
           {purchased ? (
             <div
               style={{
@@ -191,6 +229,7 @@ export default function PackagePage() {
                 borderRadius: "8px",
                 textAlign: "center",
                 fontWeight: "bold",
+                marginTop: "16px",
               }}
             >
               Purchased
@@ -199,7 +238,10 @@ export default function PackagePage() {
             <button
               onClick={handleBuy}
               disabled={buying}
-              style={buttonStyle}
+              style={{
+                ...buttonStyle,
+                marginTop: "16px",
+              }}
             >
               {buying
                 ? "Purchasing..."
@@ -214,6 +256,7 @@ export default function PackagePage() {
                 borderRadius: "8px",
                 textAlign: "center",
                 fontWeight: "bold",
+                marginTop: "16px",
               }}
             >
               FREE PACKAGE
@@ -246,4 +289,19 @@ const buttonStyle = {
   fontWeight: "bold",
   fontSize: "16px",
   cursor: "pointer",
+}
+
+const linkButton = {
+  display: "block",
+  width: "100%",
+  padding: "14px",
+  marginBottom: "12px",
+  borderRadius: "8px",
+  background: "#ffffff",
+  border: "1px solid #bbb",
+  color: "#2f6db2",
+  textAlign: "center" as const,
+  textDecoration: "none",
+  fontWeight: "bold",
+  boxSizing: "border-box" as const,
 }

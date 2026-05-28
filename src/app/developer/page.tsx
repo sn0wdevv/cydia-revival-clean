@@ -1,8 +1,61 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { supabase } from "@/lib/supabase"
+
+interface PackageData {
+  id: string
+  bundle_id: string
+  name: string
+  is_paid: boolean
+  price: number
+}
 
 export default function DeveloperPage() {
+  const router = useRouter()
+
+  const [packages, setPackages] = useState<PackageData[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    loadPackages()
+  }, [])
+
+  async function loadPackages() {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession()
+
+    if (!session) {
+      router.push("/login?next=/developer")
+      return
+    }
+
+    const { data, error } = await supabase
+      .from("packages")
+      .select(`
+        id,
+        bundle_id,
+        name,
+        is_paid,
+        price
+      `)
+      .eq("developer_id", session.user.id)
+      .order("created_at", { ascending: false })
+
+    if (!error && data) {
+      setPackages(data)
+    }
+
+    setLoading(false)
+  }
+
+  if (loading) {
+    return null
+  }
+
   return (
     <main
       style={{
@@ -44,31 +97,91 @@ export default function DeveloperPage() {
         >
           <Link
             href="/developer/upload"
-            style={linkStyle}
+            style={topButton}
           >
             Publish Package
           </Link>
 
           <Link
             href="/packages"
-            style={linkStyle}
+            style={topButton}
           >
             Browse Packages
           </Link>
 
           <Link
             href="/purcharses"
-            style={linkStyle}
+            style={topButton}
           >
             Purchased Packages
           </Link>
 
-          <Link
-            href="/account"
-            style={linkStyle}
+          <div
+            style={{
+              padding: "16px",
+              background: "#dfe7f2",
+              borderTop: "1px solid #bbb",
+              borderBottom: "1px solid #bbb",
+              fontWeight: "bold",
+              color: "#333",
+            }}
           >
-            My Account
-          </Link>
+            My Packages
+          </div>
+
+          {packages.length === 0 ? (
+            <div
+              style={{
+                padding: "20px",
+                color: "#666",
+                textAlign: "center",
+              }}
+            >
+              No packages published.
+            </div>
+          ) : (
+            packages.map((pkg) => (
+              <Link
+                key={pkg.id}
+                href={`/package/${pkg.bundle_id}`}
+                style={packageStyle}
+              >
+                <div
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "17px",
+                    color: "#000",
+                  }}
+                >
+                  {pkg.name}
+                </div>
+
+                <div
+                  style={{
+                    marginTop: "4px",
+                    color: "#666",
+                    fontSize: "14px",
+                  }}
+                >
+                  {pkg.bundle_id}
+                </div>
+
+                <div
+                  style={{
+                    marginTop: "8px",
+                    fontSize: "14px",
+                    color: pkg.is_paid
+                      ? "#2f6db2"
+                      : "#4caf50",
+                  }}
+                >
+                  {pkg.is_paid
+                    ? `$${pkg.price}`
+                    : "FREE"}
+                </div>
+              </Link>
+            ))
+          )}
 
           <div
             style={{
@@ -88,7 +201,7 @@ export default function DeveloperPage() {
   )
 }
 
-const linkStyle = {
+const topButton = {
   display: "block",
   padding: "18px",
   borderBottom: "1px solid #ccc",
@@ -96,4 +209,12 @@ const linkStyle = {
   color: "#000",
   textDecoration: "none",
   fontSize: "17px",
+}
+
+const packageStyle = {
+  display: "block",
+  padding: "16px",
+  borderBottom: "1px solid #ccc",
+  background: "white",
+  textDecoration: "none",
 }

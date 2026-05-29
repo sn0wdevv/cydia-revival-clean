@@ -1,220 +1,508 @@
 export default function HomePage() {
+
   return (
+
     <main
       style={{
+
         background:
-          "repeating-linear-gradient(to right,#d6d7dc 0px,#d6d7dc 2px,#d3d4d9 2px,#d3d4d9 4px)",
-        minHeight: "100vh",
-        fontFamily: "Helvetica",
-        paddingTop: "10px",
+          "#c8ced6 url('https://cydia.saurik.com/cytyle/pinstripes.png')",
+
+        minHeight:
+          "100vh",
+
+        fontFamily:
+          "Helvetica",
+
+        paddingTop:
+          "16px",
+
       }}
     >
+
       <div
         style={{
-          width: "285px",
-          margin: "0 auto",
+
+          width:
+            "320px",
+
+          margin:
+            "0 auto",
+
         }}
       >
+
         {/* Header */}
+
         <div
           style={{
-            display: "flex",
-            alignItems: "flex-start",
-            marginBottom: "8px",
+
+            display:
+              "flex",
+
+            alignItems:
+              "flex-start",
+
+            marginBottom:
+              "10px",
+
           }}
         >
+
           <img
             src="/cydia.png"
             alt="Cydia"
+
             style={{
-              width: "57px",
-              height: "57px",
-              borderRadius: "12px",
-              marginRight: "12px",
-              flexShrink: 0,
+
+              width:
+                "64px",
+
+              height:
+                "64px",
+
+              borderRadius:
+                "12px",
+
+              marginRight:
+                "12px",
+
+              flexShrink:
+                0,
+
             }}
           />
 
           <div>
+
             <div
               style={{
-                fontSize: "20px",
-                fontWeight: "bold",
-                color: "#000",
-                lineHeight: "1.1",
-                letterSpacing: "-0.3px",
+
+                fontSize:
+                  "21px",
+
+                fontWeight:
+                  "bold",
+
+                color:
+                  "#000",
+
+                lineHeight:
+                  "1.05",
+
+                letterSpacing:
+                  "-1px",
+
+                textShadow:
+                  "0 1px 0 rgba(255,255,255,0.9)",
+
+                WebkitUserSelect:
+                  "none",
+
               }}
             >
+
               Welcome to Cydia™
+
             </div>
 
             <div
               style={{
-                fontSize: "13px",
-                color: "#444",
-                marginTop: "3px",
+
+                fontSize:
+                  "13px",
+
+                color:
+                  "#666",
+
+                marginTop:
+                  "2px",
+
+                textShadow:
+                  "0 1px 0 rgba(255,255,255,0.9)",
+
+                WebkitUserSelect:
+                  "none",
+
+                fontWeight:
+                  "bold",
+
               }}
             >
-              by sn0wcode
+
+              by{" "}
+
+              <a
+                href="https://sn0wcode.com"
+
+                style={{
+
+                  color:
+                    "#4c566c",
+
+                  textDecoration:
+                    "none",
+
+                }}
+              >
+
+                sn0wcode
+
+              </a>
+
             </div>
+
           </div>
+
         </div>
 
         {/* Buttons */}
+
         <div
           style={{
-            border: "1px solid #b4b4b4",
-            borderRadius: "8px",
-            overflow: "hidden",
-            background: "#ececec",
-            marginBottom: "8px",
+
+            display:
+              "flex",
+
+            border:
+              "1px solid #a7a7a7",
+
+            borderRadius:
+              "8px",
+
+            overflow:
+              "hidden",
+
+            marginBottom:
+              "10px",
+
+            boxShadow:
+              "inset 0 1px 0 rgba(255,255,255,0.8)",
+
+            background:
+              "transparent",
+
           }}
         >
+
           {/* Reddit */}
+
           <a
             href="https://reddit.com/r/reloadingdata"
+
             target="_blank"
+
             rel="noopener noreferrer"
+
             style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              height: "35px",
-              padding: "0 10px",
-              textDecoration: "none",
-              color: "#000",
+
+              display:
+                "flex",
+
+              alignItems:
+                "center",
+
+              justifyContent:
+                "space-between",
+
+              width:
+                "50%",
+
+              height:
+                "43px",
+
+              padding:
+                "0 12px",
+
+              textDecoration:
+                "none",
+
+              color:
+                "#000",
+
               background:
-                "linear-gradient(to bottom,#f8f8f8,#dfdfdf)",
-              borderBottom: "1px solid #bdbdbd",
+                "transparent",
+
+              borderRight:
+                "1px solid #bdbdbd",
+
+              WebkitUserSelect:
+                "none",
+
             }}
           >
+
             <div
               style={{
-                display: "flex",
-                alignItems: "center",
+
+                display:
+                  "flex",
+
+                alignItems:
+                  "center",
+
               }}
             >
+
               <img
                 src="/reddit.png"
+
                 alt="Reddit"
+
                 style={{
-                  width: "24px",
-                  height: "24px",
-                  marginRight: "8px",
-                  borderRadius: "6px",
+
+                  width:
+                    "24px",
+
+                  height:
+                    "24px",
+
+                  marginRight:
+                    "8px",
+
+                  borderRadius:
+                    "6px",
+
                 }}
               />
 
               <span
                 style={{
-                  fontSize: "14px",
-                  fontWeight: "bold",
+
+                  fontSize:
+                    "17px",
+
+                  fontWeight:
+                    "bold",
+
+                  textShadow:
+                    "0 1px 0 rgba(255,255,255,0.8)",
+
                 }}
               >
+
                 Reddit
+
               </span>
+
             </div>
 
-            <span
+            <img
+              src="/arrow.png"
+
+              alt=">"
+
               style={{
-                color: "#7a7a7a",
-                fontSize: "22px",
-                lineHeight: 1,
+
+                width:
+                  "8px",
+
+                height:
+                  "13px",
+
+                opacity:
+                  0.7,
+
               }}
-            >
-              ›
-            </span>
+            />
+
           </a>
 
           {/* Twitter */}
+
           <a
             href="https://x.com/sn0wcodedev"
+
             target="_blank"
+
             rel="noopener noreferrer"
+
             style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              height: "35px",
-              padding: "0 10px",
-              textDecoration: "none",
-              color: "#000",
+
+              display:
+                "flex",
+
+              alignItems:
+                "center",
+
+              justifyContent:
+                "space-between",
+
+              width:
+                "50%",
+
+              height:
+                "43px",
+
+              padding:
+                "0 12px",
+
+              textDecoration:
+                "none",
+
+              color:
+                "#000",
+
               background:
-                "linear-gradient(to bottom,#f8f8f8,#dfdfdf)",
+                "transparent",
+
+              WebkitUserSelect:
+                "none",
+
             }}
           >
+
             <div
               style={{
-                display: "flex",
-                alignItems: "center",
+
+                display:
+                  "flex",
+
+                alignItems:
+                  "center",
+
               }}
             >
+
               <img
                 src="/twitter.png"
+
                 alt="Twitter"
+
                 style={{
-                  width: "24px",
-                  height: "24px",
-                  marginRight: "8px",
-                  borderRadius: "6px",
+
+                  width:
+                    "24px",
+
+                  height:
+                    "24px",
+
+                  marginRight:
+                    "8px",
+
+                  borderRadius:
+                    "6px",
+
                 }}
               />
 
               <span
                 style={{
-                  fontSize: "14px",
-                  fontWeight: "bold",
+
+                  fontSize:
+                    "17px",
+
+                  fontWeight:
+                    "bold",
+
+                  textShadow:
+                    "0 1px 0 rgba(255,255,255,0.8)",
+
                 }}
               >
+
                 Twitter
+
               </span>
+
             </div>
 
-            <span
+            <img
+              src="/arrow.png"
+
+              alt=">"
+
               style={{
-                color: "#7a7a7a",
-                fontSize: "22px",
-                lineHeight: 1,
+
+                width:
+                  "8px",
+
+                height:
+                  "13px",
+
+                opacity:
+                  0.7,
+
               }}
-            >
-              ›
-            </span>
+            />
+
           </a>
+
         </div>
 
         {/* Info Box */}
+
         <div
           style={{
+
             background:
-              "linear-gradient(to bottom,#efefef,#e2e2e2)",
-            border: "1px solid #b4b4b4",
-            borderRadius: "8px",
-            padding: "12px",
-            color: "#000",
-            fontSize: "15px",
-            lineHeight: "1.12",
-            textAlign: "center",
+              "transparent",
+
+            border:
+              "1px solid #a7a7a7",
+
+            borderRadius:
+              "8px",
+
+            padding:
+              "14px",
+
+            color:
+              "#000",
+
+            fontSize:
+              "15px",
+
+            lineHeight:
+              "1.12",
+
+            textAlign:
+              "center",
+
+            boxShadow:
+              "inset 0 1px 0 rgba(255,255,255,0.8)",
+
+            textShadow:
+              "0 1px 0 rgba(255,255,255,0.8)",
+
+            WebkitUserSelect:
+              "none",
+
           }}
         >
+
           <p style={{ marginTop: 0 }}>
+
             Cydia is an alternative to Apple's
             App Store for "jailbroken" devices,
             at this time including iPhones,
             iPads, and iPod Touches,
             specializing in the distribution
             of all that is not an "app".
+
           </p>
 
           <p style={{ marginBottom: 0 }}>
+
             Cydia is not available in Apple's
             App Store, nor is it a website:
             it is installed on your device
             using a "jailbreaking" tool.
+
           </p>
-          <p></p>
-          ===== sn0wcode =====
+
+          <p>
+
+            ===== sn0wcode =====
+
+          </p>
+
         </div>
+
       </div>
+
     </main>
+
   )
+
 }

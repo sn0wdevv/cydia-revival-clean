@@ -10,94 +10,94 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-<style>
+<link
+rel="stylesheet"
+href="/legacy/legacy.css"
+>
 
-body {
+</head>
 
-  background:#c5ccd4;
-  font-family:Helvetica;
-  padding:20px;
+<body>
 
-}
+<div class="panel">
 
-.box {
+<div class="box">
 
-  max-width:400px;
-  margin:0 auto;
-  background:#f2f2f2;
-  border:1px solid #999;
-  border-radius:8px;
-  overflow:hidden;
+<div
+class="infoBox"
+style="margin-bottom:0;"
+>
 
-}
+<div class="title">
+Purchase Package
+</div>
 
-.title {
+<div class="subtitle">
+Purchase and install package
+</div>
 
-  background:#2d4f7c;
-  color:white;
-  padding:12px;
-  text-align:center;
-  font-size:22px;
-  font-weight:bold;
+<div
+id="packageName"
+style="
+font-size:18px;
+font-weight:bold;
+margin-top:10px;
+"
+>
+Loading...
+</div>
 
-}
+</div>
 
-.content {
+<a
+href="#"
+onclick="buyPackage()"
+class="button"
+id="buyButton"
 
-  padding:15px;
+>
 
-}
+<div class="buttonLeft">
 
-.package {
+<div class="buttonText">
+Buy Package
+</div>
 
-  background:white;
-  border:1px solid #ccc;
-  border-radius:6px;
-  padding:14px;
-  margin-bottom:15px;
+</div>
 
-}
+<img
+src="/arrow.png"
+class="arrow"
 
-.button {
+>
 
-  display:block;
-  width:100%;
-  background:#2d4f7c;
-  color:white;
-  text-align:center;
-  padding:14px;
-  border-radius:6px;
-  font-size:18px;
-  border:none;
-  cursor:pointer;
+</a>
 
-}
+<div
+id="qrcode"
+style="
+padding:20px;
+text-align:center;
+background:#f6f6f6;
+"
+>
+</div>
 
-#qrcode {
+</div>
 
-  margin-top:20px;
-  text-align:center;
+<div class="footer">
 
-}
+Compatible with iOS 6 <br>
+by sn0wcode
 
-#qrcode img {
+</div>
 
-  margin:0 auto;
-
-}
-
-.footer {
-
-  text-align:center;
-  margin-top:20px;
-  font-size:13px;
-  color:#666;
-
-}
-
-</style>
+</div>
 
 <script>
+
+var currentPackageId =
+  "";
 
 function getParameterByName(name) {
 
@@ -126,22 +126,24 @@ function getParameterByName(name) {
 
 window.onload = function() {
 
-  var packageId =
+  currentPackageId =
     getParameterByName(
       "package"
     );
 
-  if(packageId == "") {
+  if(
+    currentPackageId == ""
+  ) {
 
-    packageId =
-      "Unknown Package";
+    currentPackageId =
+      "unknown.package";
 
   }
 
   document.getElementById(
     "packageName"
   ).innerHTML =
-    packageId;
+    currentPackageId;
 
 };
 
@@ -150,7 +152,8 @@ function buyPackage() {
   document.getElementById(
     "buyButton"
   ).innerHTML =
-    "Generating QR...";
+
+    '<div class="buttonLeft"><div class="buttonText">Generating QR...</div></div>';
 
   var xhr =
     new XMLHttpRequest();
@@ -182,7 +185,10 @@ function buyPackage() {
             xhr.responseText
           );
 
+        console.log(data);
+
         if(
+          data.success &&
           data.url
         ) {
 
@@ -212,7 +218,8 @@ function buyPackage() {
           document.getElementById(
             "buyButton"
           ).innerHTML =
-            "Scan QR To Pay";
+
+            '<div class="buttonLeft"><div class="buttonText">Scan QR To Pay</div></div>';
 
         } else {
 
@@ -223,11 +230,16 @@ function buyPackage() {
           document.getElementById(
             "buyButton"
           ).innerHTML =
-            "Buy Package";
+
+            '<div class="buttonLeft"><div class="buttonText">Buy Package</div></div>';
 
         }
 
       } else {
+
+        console.log(
+          xhr.responseText
+        );
 
         alert(
           "Checkout failed"
@@ -236,7 +248,8 @@ function buyPackage() {
         document.getElementById(
           "buyButton"
         ).innerHTML =
-          "Buy Package";
+
+            '<div class="buttonLeft"><div class="buttonText">Buy Package</div></div>';
 
       }
 
@@ -248,7 +261,7 @@ function buyPackage() {
     JSON.stringify({
 
       package_id:
-        "f1d75f0f-9510-4193-ac2e-5c4b8a05776b"
+        currentPackageId
 
     })
   );
@@ -256,52 +269,6 @@ function buyPackage() {
 }
 
 </script>
-
-</head>
-
-<body>
-
-<div class="box">
-
-<div class="title">
-Purchase Package
-</div>
-
-<div class="content">
-
-<div class="package">
-
-<div id="packageName">
-Loading...
-</div>
-
-</div>
-
-<button
-class="button"
-onclick="buyPackage()"
-id="buyButton"
-type="button"
->
-
-Buy Package
-
-</button>
-
-<div id="qrcode">
-</div>
-
-<div class="footer">
-
-Compatible with iOS 6
-<br>
-by sn0wcode
-
-</div>
-
-</div>
-
-</div>
 
 </body>
 

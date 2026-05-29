@@ -3,51 +3,63 @@
 <html>
 
 <head>
-  <meta charset="UTF-8">
-  <title>Download Package</title>
+
+<meta charset="UTF-8">
+
+<title>Download Package</title>
+
+<link
+rel="stylesheet"
+href="/legacy/legacy.css"
+>
+
 </head>
 
-<body
-  style="
-    background:#c5ccd4;
-    font-family:Helvetica;
-    padding:20px;
-  "
->
+<body>
+
+<div class="panel">
+
+<div class="box">
 
 <div
-  style="
-    max-width:400px;
-    margin:0 auto;
-    background:#f2f2f2;
-    border:1px solid #999;
-    border-radius:8px;
-    overflow:hidden;
-  "
+class="infoBox"
+style="margin-bottom:0;"
 >
 
-<div
-  style="
-    background:#2d4f7c;
-    color:white;
-    padding:12px;
-    text-align:center;
-    font-size:22px;
-    font-weight:bold;
-  "
->
+<div class="title">
 Download Package
 </div>
 
+<div class="subtitle">
+Checking package ownership
+</div>
+
+</div>
+
 <div
-  id="status"
-  style="
-    padding:20px;
-    text-align:center;
-    color:#000;
-  "
+id="status"
+class="button"
+style="
+justify-content:center;
+font-size:18px;
+font-weight:bold;
+"
 >
+
+<div class="buttonText">
+
 Checking ownership...
+
+</div>
+
+</div>
+
+</div>
+
+<div class="footer">
+
+by sn0wcode
+
 </div>
 
 </div>
@@ -122,7 +134,8 @@ xhr.onreadystatechange =
           document.getElementById(
             "status"
           ).innerHTML =
-            "You do not own this package."
+
+            '<div class="buttonText" style="color:#aa2222;">You do not own this package.</div>'
 
           return
 
@@ -131,7 +144,8 @@ xhr.onreadystatechange =
         document.getElementById(
           "status"
         ).innerHTML =
-          "Starting download..."
+
+          '<div class="buttonText">Starting download...</div>'
 
         window.location =
           data.download_url
@@ -141,7 +155,8 @@ xhr.onreadystatechange =
         document.getElementById(
           "status"
         ).innerHTML =
-          "Error"
+
+          '<div class="buttonText" style="color:#aa2222;">Error</div>'
 
       }
 
@@ -160,4 +175,5 @@ xhr.send(
 </script>
 
 </body>
+
 </html>

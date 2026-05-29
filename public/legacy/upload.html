@@ -3,72 +3,113 @@
 <html>
 
 <head>
-  <meta charset="UTF-8">
-  <title>Upload Package</title>
+
+<meta charset="UTF-8">
+
+<title>Upload Package</title>
+
+<link
+rel="stylesheet"
+href="/legacy/legacy.css"
+>
+
 </head>
 
-<body
-style="
-background:#c5ccd4;
-font-family:Helvetica;
-padding:20px;
-"
->
+<body>
+
+<div class="panel">
+
+<div class="box">
 
 <div
-style="
-max-width:400px;
-margin:0 auto;
-background:#f2f2f2;
-border:1px solid #999;
-padding:20px;
-"
+class="infoBox"
+style="margin-bottom:0;"
 >
 
-<h2>Upload Package</h2>
+<div class="title">
+Upload Package
+</div>
+
+<div class="subtitle">
+Submit a package to the repo
+</div>
+
+</div>
+
+<div style="padding:14px;">
 
 <input
 id="name"
 placeholder="Package Name"
-style="
-width:100%;
-padding:10px;
-margin-bottom:10px;
-"
+class="legacyInput"
 />
 
 <input
 id="bundle"
 placeholder="Bundle ID"
-style="
-width:100%;
-padding:10px;
-margin-bottom:10px;
-"
+class="legacyInput"
 />
 
 <input
 id="price"
 placeholder="Price"
-style="
-width:100%;
-padding:10px;
-margin-bottom:10px;
-"
+class="legacyInput"
 />
 
-<button
+<a
+href="#"
 onclick="uploadPackage()"
-style="
-width:100%;
-padding:12px;
-background:#2d7c2d;
-color:white;
-border:none;
-"
+class="button"
+
 >
+
+<div class="buttonLeft">
+
+<div class="buttonText">
 Upload Package
-</button>
+</div>
+
+</div>
+
+<img
+src="/arrow.png"
+class="arrow"
+
+>
+
+</a>
+
+<a
+href="/legacy/developer.html"
+class="button"
+
+>
+
+<div class="buttonLeft">
+
+<div class="buttonText">
+Back to Developer Center
+</div>
+
+</div>
+
+<img
+src="/arrow.png"
+class="arrow"
+
+>
+
+</a>
+
+</div>
+
+</div>
+
+<div class="footer">
+
+by sn0wcode
+
+</div>
 
 </div>
 
@@ -85,4 +126,5 @@ alert(
 </script>
 
 </body>
+
 </html>

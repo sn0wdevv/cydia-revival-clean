@@ -3,54 +3,62 @@
 <html>
 
 <head>
-  <meta charset="UTF-8">
-  <title>Purchases</title>
+
+<meta charset="UTF-8">
+
+<title>Purchases</title>
+
+<link
+rel="stylesheet"
+href="/legacy/legacy.css"
+>
+
 </head>
 
-<body
-  style="
-    background:#c5ccd4;
-    font-family:Helvetica;
-    padding:20px;
-  "
->
+<body>
+
+<div class="panel">
+
+<div class="box">
 
 <div
-  style="
-    max-width:400px;
-    margin:0 auto;
-    background:#f2f2f2;
-    border:1px solid #999;
-    border-radius:8px;
-    overflow:hidden;
-  "
+class="infoBox"
+style="margin-bottom:0;"
 >
 
-<div
-  style="
-    background:#2d4f7c;
-    color:white;
-    padding:12px;
-    text-align:center;
-    font-size:22px;
-    font-weight:bold;
-  "
->
+<div class="title">
 Installable Purchases
 </div>
 
-<div
-  id="packages"
-  style="padding:0;"
->
+<div class="subtitle">
+Purchased packages linked to your account
+</div>
+
+</div>
+
+<div id="packages">
 
 <div
-  style="
-    padding:15px;
-  "
+class="button"
 >
+
+<div class="buttonLeft">
+
+<div class="buttonText">
 Loading...
 </div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="footer">
+
+by sn0wcode
 
 </div>
 
@@ -116,7 +124,16 @@ xhr.onreadystatechange =
         ) {
 
           html =
-            '<div style="padding:15px;">No purchases.</div>'
+
+            '<div class="button">' +
+
+            '<div class="buttonLeft">' +
+
+            '<div class="buttonText">No purchases</div>' +
+
+            '</div>' +
+
+            '</div>'
 
         }
 
@@ -131,10 +148,25 @@ xhr.onreadystatechange =
             data.purchases[i]
 
           html +=
+
             '<a href="/legacy/package.html?id=' +
+
             pkg.package_id +
-            '" style="display:block;padding:15px;border-bottom:1px solid #ccc;color:black;text-decoration:none;background:white;">' +
+
+            '" class="button">' +
+
+            '<div class="buttonLeft">' +
+
+            '<div class="buttonText">' +
+
             pkg.package_name +
+
+            '</div>' +
+
+            '</div>' +
+
+            '<img src="/arrow.png" class="arrow">' +
+
             '</a>'
 
         }
@@ -165,4 +197,5 @@ xhr.send(
 </script>
 
 </body>
+
 </html>

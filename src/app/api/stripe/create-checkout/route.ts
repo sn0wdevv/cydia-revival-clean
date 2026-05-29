@@ -1,8 +1,14 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
+import { createClient } from "@supabase/supabase-js";
 
 const stripe = new Stripe(
   process.env.STRIPE_SECRET_KEY as string
+);
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL as string,
+  process.env.SUPABASE_SERVICE_ROLE_KEY as string
 );
 
 export async function POST(req: Request) {
@@ -28,6 +34,42 @@ export async function POST(req: Request) {
 
     }
 
+    /*
+        FIND PACKAGE
+    */
+
+    const result =
+      await supabase
+        .from("packages")
+        .select("*")
+        .eq(
+          "bundle_id",
+          package_id
+        )
+        .single();
+
+    const pkg =
+      result.data;
+
+    if(!pkg) {
+
+      return NextResponse.json(
+        {
+          success: false,
+          error:
+            "Package not found"
+        },
+        {
+          status: 404
+        }
+      );
+
+    }
+
+    /*
+        CREATE STRIPE SESSION
+    */
+
     const stripeSession =
       await stripe.checkout.sessions.create({
 
@@ -48,12 +90,14 @@ export async function POST(req: Request) {
               product_data: {
 
                 name:
-                  "Test Package"
+                  pkg.name
 
               },
 
               unit_amount:
-                199
+                Math.round(
+                  Number(pkg.price) * 100
+                )
 
             },
 
@@ -66,7 +110,10 @@ export async function POST(req: Request) {
         metadata: {
 
           package_id:
-            package_id,
+            pkg.id,
+
+          bundle_id:
+            pkg.bundle_id,
 
           user_id:
             "test-user"
@@ -74,10 +121,11 @@ export async function POST(req: Request) {
         },
 
         success_url:
-          "http://localhost:3000/success.html",
+          "https://cydia.sn0wcode.com/payment-success",
 
         cancel_url:
-          "http://localhost:3000/legacy/purchase.html"
+          "https://cydia.sn0wcode.com/legacy/purchase.html?package=" +
+          pkg.bundle_id
 
       });
 

@@ -3,111 +3,95 @@
 <html>
 
 <head>
-  <meta charset="UTF-8">
-  <title>Login</title>
+
+<meta charset="UTF-8">
+
+<title>Login</title>
+
+<link
+rel="stylesheet"
+href="/legacy/legacy.css"
+>
+
 </head>
 
-<body
-  style="
-    background:#c5ccd4;
-    font-family:Helvetica;
-    padding:20px;
-  "
->
+<body>
 
-<div
-  style="
-    max-width:400px;
-    margin:0 auto;
-    background:#f2f2f2;
-    border:1px solid #999;
-    border-radius:8px;
-    overflow:hidden;
-  "
->
+<div class="panel">
 
-<div
-  style="
-    background:#2d4f7c;
-    color:white;
-    padding:12px;
-    text-align:center;
-    font-size:22px;
-    font-weight:bold;
-  "
->
+<div class="infoBox">
+
+<div class="title">
 Sign In
 </div>
 
-<div style="padding:15px;">
+<div class="subtitle">
+Login with your Cydia account
+</div>
 
 <input
 id="email"
 type="text"
 placeholder="Email"
-style="
-width:100%;
-padding:10px;
-margin-bottom:12px;
-box-sizing:border-box;
-"
-
+class="legacyInput"
 >
 
 <input
 id="password"
 type="password"
 placeholder="Password"
-style="
-width:100%;
-padding:10px;
-margin-bottom:12px;
-box-sizing:border-box;
-"
-
+class="legacyInput"
 >
 
-<button
+<a
+href="#"
 onclick="login()"
-style="
-width:100%;
-padding:10px;
-background:#2d4f7c;
-color:white;
-border:none;
-"
-
+class="button"
 >
 
-Login </button>
+<div class="buttonLeft">
+
+<div class="buttonText">
+Login
+</div>
+
+</div>
+
+<img
+src="/arrow.png"
+class="arrow"
+>
+
+</a>
 
 <a
 href="/legacy/register.html"
-style="
-display:block;
-text-align:center;
-margin-top:16px;
-color:#2d4f7c;
-text-decoration:none;
-font-weight:bold;
-"
-
+class="button"
 >
 
-Create Account </a>
+<div class="buttonLeft">
 
-<div
-  style="
-    text-align:center;
-    margin-top:20px;
-    font-size:13px;
-    color:#666;
-  "
+<div class="buttonText">
+Create Account
+</div>
+
+</div>
+
+<img
+src="/arrow.png"
+class="arrow"
 >
+
+</a>
+
+<div class="footer">
+
 by sn0wcode
+
 </div>
 
 </div>
+
 </div>
 
 <script>
@@ -195,4 +179,5 @@ function login() {
 </script>
 
 </body>
+
 </html>

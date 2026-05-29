@@ -3,96 +3,118 @@
 <html>
 
 <head>
-  <meta charset="UTF-8">
-  <title>Package</title>
+
+<meta charset="UTF-8">
+
+<title>Package</title>
+
+<link
+rel="stylesheet"
+href="/legacy/legacy.css"
+>
+
 </head>
 
-<body
-  style="
-    background:#c5ccd4;
-    font-family:Helvetica;
-    padding:20px;
-  "
+<body>
+
+<div class="panel">
+
+<div class="box">
+
+<div
+class="infoBox"
+style="margin-bottom:0;"
 >
 
 <div
-  style="
-    max-width:400px;
-    margin:0 auto;
-    background:#f2f2f2;
-    border:1px solid #999;
-    border-radius:8px;
-    overflow:hidden;
-  "
->
-
-<div
-  id="title"
-  style="
-    background:#2d4f7c;
-    color:white;
-    padding:12px;
-    text-align:center;
-    font-size:22px;
-    font-weight:bold;
-  "
+id="title"
+class="title"
 >
 Loading...
 </div>
 
-<div style="padding:15px;">
+<div class="subtitle">
+Package Information
+</div>
+
+</div>
 
 <div
-  style="
-    font-weight:bold;
-    margin-bottom:6px;
-  "
+class="button"
+style="
+height:auto;
+padding-top:12px;
+padding-bottom:12px;
+display:block;
+"
+>
+
+<div
+style="
+font-size:13px;
+font-weight:bold;
+margin-bottom:5px;
+color:#000;
+"
 >
 Bundle ID
 </div>
 
 <div
-  id="bundle"
-  style="
-    color:#666;
-    margin-bottom:16px;
-  "
+id="bundle"
+style="
+font-size:14px;
+color:#666;
+"
 >
 </div>
 
+</div>
+
 <div
-  style="
-    font-weight:bold;
-    margin-bottom:6px;
-  "
+class="button"
+style="
+height:auto;
+padding-top:12px;
+padding-bottom:12px;
+display:block;
+"
+>
+
+<div
+style="
+font-size:13px;
+font-weight:bold;
+margin-bottom:5px;
+color:#000;
+"
 >
 Price
 </div>
 
 <div
-  id="price"
-  style="
-    color:#666;
-    margin-bottom:20px;
-  "
+id="price"
+style="
+font-size:16px;
+font-weight:bold;
+color:#2d7c2d;
+"
 >
+</div>
+
 </div>
 
 <div id="button">
 </div>
 
-<div
-  style="
-    text-align:center;
-    margin-top:20px;
-    font-size:13px;
-    color:#666;
-  "
->
-by sn0wcode
 </div>
 
+<div class="footer">
+
+by sn0wcode
+
 </div>
+
 </div>
 
 <script>
@@ -162,6 +184,7 @@ xhr.onreadystatechange =
           )
 
           return
+
         }
 
         pkg =
@@ -190,7 +213,17 @@ xhr.onreadystatechange =
             "button"
           ).innerHTML =
 
-          '<button onclick="installPackage()" style="width:100%;padding:12px;background:#2d4f7c;color:white;border:none;">Install Package</button>'
+          '<a href="#" onclick="installPackage()" class="button">' +
+
+          '<div class="buttonLeft">' +
+
+          '<div class="buttonText">Install Package</div>' +
+
+          '</div>' +
+
+          '<img src="/arrow.png" class="arrow">' +
+
+          '</a>'
 
         } else {
 
@@ -198,7 +231,17 @@ xhr.onreadystatechange =
             "button"
           ).innerHTML =
 
-          '<button onclick="purchase()" style="width:100%;padding:12px;background:#2d7c2d;color:white;border:none;">Purchase Package</button>'
+          '<a href="#" onclick="purchase()" class="button">' +
+
+          '<div class="buttonLeft">' +
+
+          '<div class="buttonText">Purchase Package</div>' +
+
+          '</div>' +
+
+          '<img src="/arrow.png" class="arrow">' +
+
+          '</a>'
 
         }
 
@@ -309,4 +352,5 @@ function installPackage() {
 </script>
 
 </body>
+
 </html>

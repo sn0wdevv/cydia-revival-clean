@@ -3,51 +3,67 @@
 <html>
 
 <head>
-  <meta charset="UTF-8">
-  <title>Purchase Complete</title>
+
+<meta charset="UTF-8">
+
+<title>Purchase Complete</title>
+
+<link
+rel="stylesheet"
+href="/legacy/legacy.css"
+>
+
 </head>
 
-<body
-  style="
-    background:#c5ccd4;
-    font-family:Helvetica;
-    padding:20px;
-  "
+<body>
+
+<div class="panel">
+
+<div class="box">
+
+<div
+class="infoBox"
+style="margin-bottom:0;"
 >
 
 <div
-  style="
-    max-width:400px;
-    margin:0 auto;
-    background:#f2f2f2;
-    border:1px solid #999;
-    border-radius:8px;
-    overflow:hidden;
-  "
->
-
-<div
-  style="
-    background:#2d7c2d;
-    color:white;
-    padding:12px;
-    text-align:center;
-    font-size:22px;
-    font-weight:bold;
-  "
+class="title"
+style="color:#2d7c2d;"
 >
 Purchase Complete
 </div>
 
+<div class="subtitle">
+Finishing your purchase
+</div>
+
+</div>
+
 <div
-  id="status"
-  style="
-    padding:20px;
-    text-align:center;
-    color:#000;
-  "
+id="status"
+class="button"
+style="
+justify-content:center;
+font-size:18px;
+font-weight:bold;
+height:70px;
+"
 >
+
+<div class="buttonText">
+
 Processing purchase...
+
+</div>
+
+</div>
+
+</div>
+
+<div class="footer">
+
+by sn0wcode
+
 </div>
 
 </div>
@@ -113,7 +129,8 @@ xhr.onreadystatechange =
           document.getElementById(
             "status"
           ).innerHTML =
-            "Purchase failed"
+
+            '<div class="buttonText" style="color:#aa2222;">Purchase failed</div>'
 
           return
 
@@ -123,14 +140,25 @@ xhr.onreadystatechange =
           "status"
         ).innerHTML =
 
-        'Purchase completed successfully.<br><br><a href="/legacy/purchases.html">View Purchases</a>'
+          '<a href="/legacy/purchases.html" class="button" style="border:none;height:auto;justify-content:space-between;width:100%;">' +
+
+          '<div class="buttonLeft">' +
+
+          '<div class="buttonText">View Purchases</div>' +
+
+          '</div>' +
+
+          '<img src="/arrow.png" class="arrow">' +
+
+          '</a>'
 
       } catch (e) {
 
         document.getElementById(
           "status"
         ).innerHTML =
-          "Error"
+
+          '<div class="buttonText" style="color:#aa2222;">Error</div>'
 
       }
 
@@ -149,4 +177,5 @@ xhr.send(
 </script>
 
 </body>
+
 </html>

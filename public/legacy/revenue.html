@@ -1,18 +1,89 @@
 <!DOCTYPE html>
+
 <html>
+
 <head>
+
 <meta charset="UTF-8">
+
 <title>Revenue</title>
+
+<link
+rel="stylesheet"
+href="/legacy/legacy.css"
+>
+
 </head>
 
-<body style="font-family:Helvetica;background:#c5ccd4;padding:20px;">
+<body>
 
-<div style="max-width:400px;margin:0 auto;background:#f2f2f2;padding:20px;border:1px solid #999;">
+<div class="panel">
 
-<h2>Revenue & Payouts</h2>
+<div class="box">
 
-<div id="revenue">
+<div
+class="infoBox"
+style="margin-bottom:0;"
+>
+
+<div class="title">
+Revenue & Payouts
+</div>
+
+<div class="subtitle">
+Developer revenue information
+</div>
+
+</div>
+
+<div
+id="revenue"
+class="button"
+style="
+justify-content:center;
+font-size:24px;
+font-weight:bold;
+color:#2d7c2d;
+height:70px;
+"
+>
+
+<div class="buttonText">
+
 Loading...
+
+</div>
+
+</div>
+
+<a
+href="/legacy/developer.html"
+class="button"
+
+>
+
+<div class="buttonLeft">
+
+<div class="buttonText">
+Back to Developer Center
+</div>
+
+</div>
+
+<img
+src="/arrow.png"
+class="arrow"
+
+>
+
+</a>
+
+</div>
+
+<div class="footer">
+
+by sn0wcode
+
 </div>
 
 </div>
@@ -22,9 +93,11 @@ Loading...
 document.getElementById(
   "revenue"
 ).innerHTML =
-  "$0.00"
+
+  '<div class="buttonText" style="font-size:24px;color:#2d7c2d;">$0.00</div>'
 
 </script>
 
 </body>
+
 </html>

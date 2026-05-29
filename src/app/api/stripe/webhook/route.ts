@@ -16,62 +16,128 @@ export async function POST(req: Request) {
   try {
 
     const body =
-      await req.text();
+      await req.json();
 
-    const sig =
-      req.headers.get(
-        "stripe-signature"
-      ) as string;
+    const package_id =
+      body.package_id;
 
-    const event =
-      stripe.webhooks.constructEvent(
+    if(!package_id) {
 
-        body,
-
-        sig,
-
-        process.env
-          .STRIPE_WEBHOOK_SECRET as string
-
+      return NextResponse.json(
+        {
+          success: false,
+          error:
+            "Missing package_id"
+        },
+        {
+          status: 400
+        }
       );
-
-    if(
-      event.type ===
-      "checkout.session.completed"
-    ) {
-
-      const session =
-        event.data.object as Stripe.Checkout.Session;
-
-      const packageId =
-        session.metadata?.package_id;
-
-      const userId =
-        session.metadata?.user_id;
-
-      if(
-        packageId &&
-        userId
-      ) {
-
-        await supabase
-          .from("purchases")
-          .insert({
-
-            user_id:
-              userId,
-
-            package_id:
-              packageId
-
-          });
-
-      }
 
     }
 
+    /*
+        FIND PACKAGE
+    */
+
+    const result =
+      await supabase
+        .from("packages")
+        .select("*")
+        .eq(
+          "bundle_id",
+          package_id
+        )
+        .single();
+
+    const pkg =
+      result.data;
+
+    if(!pkg) {
+
+      return NextResponse.json(
+        {
+          success: false,
+          error:
+            "Package not found"
+        },
+        {
+          status: 404
+        }
+      );
+
+    }
+
+    /*
+        CREATE STRIPE SESSION
+    */
+
+    const stripeSession =
+      await stripe.checkout.sessions.create({
+
+        payment_method_types: [
+          "card"
+        ],
+
+        mode: "payment",
+
+        line_items: [
+
+          {
+
+            price_data: {
+
+              currency: "usd",
+
+              product_data: {
+
+                name:
+                  pkg.name
+
+              },
+
+              unit_amount:
+                Math.round(
+                  Number(pkg.price) * 100
+                )
+
+            },
+
+            quantity: 1
+
+          }
+
+        ],
+
+        metadata: {
+
+          package_id:
+            pkg.id,
+
+          bundle_id:
+            pkg.bundle_id,
+
+          user_id:
+            "legacy-user"
+
+        },
+
+        success_url:
+          "https://cydia.sn0wcode.com/legacy/success.html",
+
+        cancel_url:
+          "https://cydia.sn0wcode.com/legacy/purchase.html?package=" +
+          pkg.bundle_id
+
+      });
+
     return NextResponse.json({
-      received: true
+
+      success: true,
+
+      url:
+        stripeSession.url
+
     });
 
   } catch(err) {
@@ -80,10 +146,12 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       {
-        error: "Webhook Error"
+        success: false,
+        error:
+          "Server Error"
       },
       {
-        status: 400
+        status: 500
       }
     );
 

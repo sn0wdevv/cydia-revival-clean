@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Welcome to Cydia</title>
+
+<link
+rel="icon"
+type="image/png"
+href="/cydia.png"
+>
+
+<style>
+
+body {
+
+    margin:0;
+    padding:0;
+
+    background:
+        #c8ced6
+        url("https://cydia.saurik.com/cytyle/pinstripes.png");
+
+    min-height:
+        100vh;
+
+    font-family:
+        Helvetica;
+
+}
+
+.main {
+
+    width:
+        320px;
+
+    margin:
+        16px auto;
+
+}
+
+.header {
+
+    display:
+        flex;
+
+    align-items:
+        flex-start;
+
+    margin-bottom:
+        10px;
+
+}
+
+.header img.icon {
+
+    width:
+        64px;
+
+    height:
+        64px;
+
+    border-radius:
+        12px;
+
+    margin-right:
+        12px;
+
+    flex-shrink:
+        0;
+
+}
+
+.title {
+
+    font-size:
+        21px;
+
+    font-weight:
+        bold;
+
+    color:
+        #000;
+
+    line-height:
+        1.05;
+
+    letter-spacing:
+        -1px;
+
+    text-shadow:
+        0 1px 0 rgba(255,255,255,0.9);
+
+    -webkit-user-select:
+        none;
+
+}
+
+.subtitle {
+
+    font-size:
+        13px;
+
+    color:
+        #666;
+
+    margin-top:
+        2px;
+
+    font-weight:
+        bold;
+
+    text-shadow:
+        0 1px 0 rgba(255,255,255,0.9);
+
+    -webkit-user-select:
+        none;
+
+}
+
+.subtitle a {
+
+    color:
+        #4c566c;
+
+    text-decoration:
+        none;
+
+}
+
+.buttons {
+
+    display:
+        flex;
+
+    border:
+        1px solid #a7a7a7;
+
+    border-radius:
+        8px;
+
+    overflow:
+        hidden;
+
+    margin-bottom:
+        10px;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.8);
+
+    background:
+        transparent;
+
+}
+
+.button {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    width:
+        50%;
+
+    height:
+        43px;
+
+    padding:
+        0 12px;
+
+    text-decoration:
+        none;
+
+    color:
+        #000;
+
+    background:
+        transparent;
+
+    -webkit-user-select:
+        none;
+
+    box-sizing:
+        border-box;
+
+}
+
+.button:first-child {
+
+    border-right:
+        1px solid #bdbdbd;
+
+}
+
+.buttonLeft {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+}
+
+.buttonIcon {
+
+    width:
+        24px;
+
+    height:
+        24px;
+
+    margin-right:
+        8px;
+
+    border-radius:
+        6px;
+
+}
+
+.buttonText {
+
+    font-size:
+        17px;
+
+    font-weight:
+        bold;
+
+    text-shadow:
+        0 1px 0 rgba(255,255,255,0.8);
+
+}
+
+.arrow {
+
+    width:
+        8px;
+
+    height:
+        13px;
+
+    opacity:
+        0.7;
+
+}
+
+.infoBox {
+
+    background:
+        transparent;
+
+    border:
+        1px solid #a7a7a7;
+
+    border-radius:
+        8px;
+
+    padding:
+        14px;
+
+    color:
+        #000;
+
+    font-size:
+        15px;
+
+    line-height:
+        1.12;
+
+    text-align:
+        center;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.8);
+
+    text-shadow:
+        0 1px 0 rgba(255,255,255,0.8);
+
+    -webkit-user-select:
+        none;
+
+}
+
+.infoBox p {
+
+    margin:
+        0 0 14px 0;
+
+}
+
+.infoBox p:last-child {
+
+    margin-bottom:
+        0;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="main">
+
+<div class="header">
+
+<img
+src="/cydia.png"
+alt="Cydia"
+class="icon"
+>
+
+<div>
+
+<div class="title">
+
+Welcome to Cydia™
+
+</div>
+
+<div class="subtitle">
+
+by
+
+<a href="https://sn0wcode.com">
+
+sn0wcode
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="buttons">
+
+<a
+href="https://reddit.com/r/reloadingdata"
+target="_blank"
+class="button"
+>
+
+<div class="buttonLeft">
+
+<img
+src="/reddit.png"
+class="buttonIcon"
+alt="Reddit"
+>
+
+<div class="buttonText">
+
+Reddit
+
+</div>
+
+</div>
+
+<img
+src="/arrow.png"
+class="arrow"
+alt=">"
+>
+
+</a>
+
+<a
+href="https://x.com/sn0wcodedev"
+target="_blank"
+class="button"
+>
+
+<div class="buttonLeft">
+
+<img
+src="/twitter.png"
+class="buttonIcon"
+alt="Twitter"
+>
+
+<div class="buttonText">
+
+Twitter
+
+</div>
+
+</div>
+
+<img
+src="/arrow.png"
+class="arrow"
+alt=">"
+>
+
+</a>
+
+</div>
+
+<div class="infoBox">
+
+<p>
+
+Cydia is an alternative to Apple's
+App Store for "jailbroken" devices,
+at this time including iPhones,
+iPads, and iPod Touches,
+specializing in the distribution
+of all that is not an "app".
+
+</p>
+
+<p>
+
+Cydia is not available in Apple's
+App Store, nor is it a website:
+it is installed on your device
+using a "jailbreaking" tool.
+
+</p>
+
+<p>
+
+===== sn0wcode =====
+
+</p>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

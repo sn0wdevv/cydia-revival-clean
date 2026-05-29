@@ -1,95 +1,108 @@
-import { NextResponse } from "next/server"
-import Stripe from "stripe"
-import { createClient } from "@supabase/supabase-js"
+import { NextResponse } from "next/server";
+import Stripe from "stripe";
 
 const stripe = new Stripe(
-  process.env.STRIPE_SECRET_KEY!
-)
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
+  process.env.STRIPE_SECRET_KEY as string
+);
 
 export async function POST(req: Request) {
+
   try {
-    const body = await req.json()
 
-    const { payment_code } = body
+    const body =
+      await req.json();
 
-    if (!payment_code) {
+    const package_id =
+      body.package_id;
+
+    if(!package_id) {
+
       return NextResponse.json(
         {
-          error: "Missing payment code",
+          success: false
         },
         {
-          status: 400,
+          status: 400
         }
-      )
-    }
+      );
 
-    const { data: sessionData } = await supabase
-      .from("purchase_sessions")
-      .select("*")
-      .eq("payment_code", payment_code)
-      .single()
-
-    if (!sessionData) {
-      return NextResponse.json(
-        {
-          error: "Session not found",
-        },
-        {
-          status: 404,
-        }
-      )
     }
 
     const stripeSession =
       await stripe.checkout.sessions.create({
-        payment_method_types: ["card"],
+
+        payment_method_types: [
+          "card"
+        ],
 
         mode: "payment",
 
         line_items: [
+
           {
+
             price_data: {
+
               currency: "usd",
 
               product_data: {
-                name: sessionData.package_name,
+
+                name:
+                  "Test Package"
+
               },
 
               unit_amount:
-                Math.round(
-                  Number(sessionData.price) * 100
-                ),
+                199
+
             },
 
-            quantity: 1,
-          },
+            quantity: 1
+
+          }
+
         ],
 
+        metadata: {
+
+          package_id:
+            package_id,
+
+          user_id:
+            "test-user"
+
+        },
+
         success_url:
-          `https://cydia.sn0wcode.com/payment-success?code=${payment_code}`,
+          "http://localhost:3000/success.html",
 
         cancel_url:
-          `https://cydia.sn0wcode.com/pay/${payment_code}`,
-      })
+          "http://localhost:3000/legacy/purchase.html"
+
+      });
 
     return NextResponse.json({
-      checkout_url: stripeSession.url,
-    })
-  } catch (err) {
-    console.log(err)
+
+      success: true,
+
+      url:
+        stripeSession.url
+
+    });
+
+  } catch(err) {
+
+    console.log(err);
 
     return NextResponse.json(
       {
-        error: "Server error",
+        success: false
       },
       {
-        status: 500,
+        status: 500
       }
-    )
+    );
+
   }
+
 }

@@ -268,7 +268,7 @@ xhr.onreadystatechange =
       } catch (e) {
 
         alert(
-          "Error"
+          "Error loading package"
         )
 
       }
@@ -300,7 +300,7 @@ function purchase() {
 
   xhr.open(
     "POST",
-    "/api/legacy-checkout",
+    "/api/stripe/create-checkout",
     true
   )
 
@@ -342,7 +342,7 @@ function purchase() {
         } catch (e) {
 
           alert(
-            "Error"
+            "Stripe checkout error"
           )
 
         }
@@ -353,9 +353,10 @@ function purchase() {
 
   xhr.send(
     JSON.stringify({
-      uid: uid,
+
       package_id:
-        pkg.id
+        pkg.bundle_id
+
     })
   )
 

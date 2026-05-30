@@ -1,126 +1,93 @@
 import Stripe from "stripe"
+import { NextResponse } from "next/server"
+import { createClient } from "@supabase/supabase-js"
 
-import { NextResponse }
-from "next/server"
-
-import {
-createClient
-}
-from "@supabase/supabase-js"
-
-const stripe =
-new Stripe(
-process.env
-.STRIPE_SECRET_KEY!,
-{
-apiVersion:
-"2026-05-27.dahlia"
-}
+const stripe = new Stripe(
+  process.env.STRIPE_SECRET_KEY as string
 )
 
-const supabase =
-createClient(
-process.env
-.NEXT_PUBLIC_SUPABASE_URL!,
-process.env
-.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL as string,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
 )
 
-export async function POST(
-request: Request
-) {
+export async function POST(request: Request) {
 
-try {
+  try {
 
+    const body = await request.json()
 
-const body =
-  await request.json()
+    const uid = body.uid
+    const package_id = body.package_id
 
-const uid =
-  body.uid
+    const { data: pkg } =
+      await supabase
+        .from("packages")
+        .select("*")
+        .eq("id", package_id)
+        .single()
 
-const package_id =
-  body.package_id
+    if (!pkg) {
 
-const result =
-  await supabase
-    .from("packages")
-    .select("*")
-    .eq(
-      "id",
-      package_id
-    )
-    .single()
+      return NextResponse.json({
+        success: false
+      })
 
-const pkg =
-  result.data
+    }
 
-if (!pkg) {
+    const session =
+      await stripe.checkout.sessions.create({
 
-  return NextResponse.json({
-    success: false
-  })
+        payment_method_types: ["card"],
 
-}
+        mode: "payment",
 
-const session =
-  await stripe.checkout.sessions.create({
+        line_items: [
+          {
+            price_data: {
 
-    payment_method_types: [
-      "card"
-    ],
+              currency: "usd",
 
-    mode: "payment",
+              product_data: {
+                name: pkg.name
+              },
 
-    line_items: [
-      {
-        price_data: {
-          currency: "usd",
+              unit_amount:
+                Math.round(pkg.price * 100)
 
-          product_data: {
-            name: pkg.name
-          },
+            },
 
-          unit_amount:
-            Math.round(
-              pkg.price * 100
-            )
-        },
+            quantity: 1
+          }
+        ],
 
-        quantity: 1
-      }
-    ],
+        success_url:
+          process.env.NEXT_PUBLIC_SITE_URL +
+          "/legacy/success.html?package=" +
+          pkg.id +
+          "&uid=" +
+          uid,
 
-    success_url:
-      process.env
-        .NEXT_PUBLIC_SITE_URL +
-      "/legacy/success.html?package=" +
-      pkg.id +
-      "&uid=" +
-      uid,
+        cancel_url:
+          process.env.NEXT_PUBLIC_SITE_URL +
+          "/legacy/package.html?id=" +
+          pkg.bundle_id
 
-    cancel_url:
-      process.env
-        .NEXT_PUBLIC_SITE_URL +
-      "/legacy/package.html?id=" +
-      pkg.bundle_id
+      })
 
-  })
+    return NextResponse.json({
+      success: true,
+      url: session.url
+    })
 
-return NextResponse.json({
-  success: true,
-  url: session.url
-})
+  } catch (error) {
 
+    console.log(error)
 
-} catch {
+    return NextResponse.json({
+      success: false
+    })
 
-
-return NextResponse.json({
-  success: false
-})
-
-
-}
+  }
 
 }

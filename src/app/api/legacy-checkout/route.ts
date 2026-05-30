@@ -15,10 +15,14 @@ export async function POST(request: Request) {
 
   try {
 
-    const body = await request.json()
+    const body =
+      await request.json()
 
-    const uid = body.uid
-    const package_id = body.package_id
+    const uid =
+      body.uid
+
+    const package_id =
+      body.package_id
 
     const { data: pkg } =
       await supabase
@@ -30,7 +34,8 @@ export async function POST(request: Request) {
     if (!pkg) {
 
       return NextResponse.json({
-        success: false
+        success: false,
+        error: "Package not found"
       })
 
     }
@@ -38,7 +43,9 @@ export async function POST(request: Request) {
     const session =
       await stripe.checkout.sessions.create({
 
-        payment_method_types: ["card"],
+        payment_method_types: [
+          "card"
+        ],
 
         mode: "payment",
 
@@ -53,7 +60,9 @@ export async function POST(request: Request) {
               },
 
               unit_amount:
-                Math.round(pkg.price * 100)
+                Math.round(
+                  pkg.price * 100
+                )
 
             },
 
@@ -80,12 +89,15 @@ export async function POST(request: Request) {
       url: session.url
     })
 
-  } catch (error) {
+  } catch (error: any) {
 
     console.log(error)
 
     return NextResponse.json({
-      success: false
+      success: false,
+      error:
+        error?.message ||
+        "Unknown error"
     })
 
   }

@@ -308,8 +308,9 @@ function purchase() {
           ) {
 
             alert(
-              "Checkout failed"
-            )
+  data.error ||
+  "Checkout failed"
+)
 
             return
 

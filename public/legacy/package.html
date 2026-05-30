@@ -206,6 +206,26 @@ xhr.onreadystatechange =
           "$" + pkg.price
 
         if (
+          !pkg.is_paid
+        ) {
+
+          document.getElementById(
+            "button"
+          ).innerHTML =
+
+          '<a href="#" onclick="installPackage()" class="button">' +
+
+          '<div class="buttonLeft">' +
+
+          '<div class="buttonText">Install Package</div>' +
+
+          '</div>' +
+
+          '<img src="/arrow.png" class="arrow">' +
+
+          '</a>'
+
+        } else if (
           data.owned
         ) {
 
@@ -308,9 +328,9 @@ function purchase() {
           ) {
 
             alert(
-  data.error ||
-  "Checkout failed"
-)
+              data.error ||
+              "Checkout failed"
+            )
 
             return
 

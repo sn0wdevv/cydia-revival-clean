@@ -24,18 +24,36 @@ export async function POST(request: Request) {
     const package_id =
       body.package_id
 
-    const { data: pkg } =
+    if (!package_id) {
+
+      return NextResponse.json({
+        success: false,
+        error: "Missing package_id"
+      })
+
+    }
+
+    const { data: pkg, error: pkgError } =
       await supabase
         .from("packages")
         .select("*")
         .eq("id", package_id)
         .single()
 
-    if (!pkg) {
+    if (pkgError || !pkg) {
 
       return NextResponse.json({
         success: false,
         error: "Package not found"
+      })
+
+    }
+
+    if (!process.env.NEXT_PUBLIC_SITE_URL) {
+
+      return NextResponse.json({
+        success: false,
+        error: "Missing NEXT_PUBLIC_SITE_URL"
       })
 
     }
@@ -61,7 +79,7 @@ export async function POST(request: Request) {
 
               unit_amount:
                 Math.round(
-                  pkg.price * 100
+                  Number(pkg.price) * 100
                 )
 
             },
@@ -91,13 +109,11 @@ export async function POST(request: Request) {
 
   } catch (error: any) {
 
-    console.log(error)
-
     return NextResponse.json({
       success: false,
       error:
         error?.message ||
-        "Unknown error"
+        "Unknown server error"
     })
 
   }

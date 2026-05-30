@@ -3,7 +3,11 @@ import Stripe from "stripe";
 import { createClient } from "@supabase/supabase-js";
 
 const stripe = new Stripe(
-  process.env.STRIPE_SECRET_KEY as string
+  process.env.STRIPE_SECRET_KEY as string,
+  {
+    httpClient:
+      Stripe.createFetchHttpClient()
+  }
 );
 
 const supabase = createClient(
@@ -21,11 +25,13 @@ export async function POST(req: Request) {
     const package_id =
       body.package_id;
 
-    if(!package_id) {
+    if (!package_id) {
 
       return NextResponse.json(
         {
-          success: false
+          success: false,
+          error:
+            "Missing package_id"
         },
         {
           status: 400
@@ -51,7 +57,7 @@ export async function POST(req: Request) {
     const pkg =
       result.data;
 
-    if(!pkg) {
+    if (!pkg) {
 
       return NextResponse.json(
         {
@@ -110,10 +116,10 @@ export async function POST(req: Request) {
         metadata: {
 
           package_id:
-            pkg.id,
+            String(pkg.id),
 
           bundle_id:
-            pkg.bundle_id,
+            String(pkg.bundle_id),
 
           user_id:
             "test-user"
@@ -124,7 +130,7 @@ export async function POST(req: Request) {
           "https://cydia.sn0wcode.com/payment-success",
 
         cancel_url:
-          "https://cydia.sn0wcode.com/legacy/purchase.html?package=" +
+          "https://cydia.sn0wcode.com/legacy/package.html?id=" +
           pkg.bundle_id
 
       });
@@ -138,13 +144,19 @@ export async function POST(req: Request) {
 
     });
 
-  } catch(err) {
+  } catch (err: any) {
 
-    console.log(err);
+    console.log(
+      "STRIPE ERROR:",
+      err
+    );
 
     return NextResponse.json(
       {
-        success: false
+        success: false,
+        error:
+          err?.message ||
+          "Internal Stripe Error"
       },
       {
         status: 500
